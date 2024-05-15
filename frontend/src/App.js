@@ -13,6 +13,7 @@ import Avail_Locations from './Pages/AvailableArenas/AvailableLocations';
 import SportCatagories_ from './Pages/SelectCategory/Catagories';
 import TournamentForm from './Pages/TournamentDetails';
 import Arenas from './Pages/Arenas/AvailableArenas';
+import GroundInformation from './Pages/GroundInfo/GroundInformation';
 
 const App = () => {
   return (
@@ -29,6 +30,8 @@ const App = () => {
           <Route path='/login' element={<SignInPg/>}/> 
           <Route path='/success' element={<Success/>}/>
           <Route path='/searchResults' element={<SearchResults/>}/>
+          <Route path='/GroundInfo' element={<GroundInformation/>}/>
+
           <Route path='*' element={<NotFound/>}/>
 
         </Routes>

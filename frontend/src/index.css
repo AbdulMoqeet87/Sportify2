@@ -1364,3 +1364,25 @@ button, input, optgroup, select, textarea {
 .uppercase-text {
   text-transform: uppercase;
 }
+
+.pic_bg{
+  height:470px;
+  width:150px;
+  padding:3px;
+ background-color: #000441;
+}
+
+.Name-heading{
+  font-size: 45px;
+  color: #060a4d;
+  text-align: left;
+  font-weight: 600;
+}
+
+.paragraph_{
+  text-align: left;
+  font-size: 20px;
+  color: rgb(78, 77, 77);
+  height: 370px;
+  align-content: flex-end;
+}
