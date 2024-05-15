@@ -6,16 +6,18 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [UserName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const[User,setUser]=useState();
   const navigate = useNavigate();
 
   const handleReservation = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
+     
+      const response = await axios.post(
         "http://localhost:4000/User/login",
-        { UserName, Password },
+        { email, Password } ,
         {
           headers: {
             "Content-Type": "application/json",
@@ -24,11 +26,28 @@ const Login = () => {
         }
       );
 
-      toast.success(data.message);
-      setUserName("");
+      toast.success(response.data.message);
+      const user=await axios.get(
+        `http://localhost:4000/User/GetLoggedUser/${email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+        setUser(user.data.data);
+        const userId = user.data.data._id;
+        const userName = user.data.data.FirstName;
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        console.log("user",user.data.data.FirstName);
+      navigate('/home', { state: {User:user.data.data} });
+      setEmail("");
       setPassword("");
-      navigate("/home");
-    } catch (error) {
+      
+    }
+     catch (error) 
+    {
       toast.error(error.response.data.message);
     }
   };
@@ -54,9 +73,9 @@ const Login = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="User Name"
-                  value={UserName}
-                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>

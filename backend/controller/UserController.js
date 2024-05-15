@@ -42,14 +42,17 @@ export const CreateUser = async (req, res, next) => {
 };
 
 export const FindUser = async (req, res, next) => {
-  try {
-    const { UserName, Password } = req.body;
 
-    if (!UserName || !Password) {
-      return next(new ErrorHandler("Please provide both username and password!", 400));
+  try {
+
+    const { email, Password } = req.body;
+
+    if (!email || !Password) 
+    {
+      return next(new ErrorHandler("Please provide both email and password!", 400));
     }
 
-    const existingUser = await User.findOne({ UserName });
+    const existingUser = await User.findOne({email});
 
     if (!existingUser) {
       return next(new ErrorHandler("User doesn't exist!", 404));
@@ -68,6 +71,7 @@ export const FindUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Login successful!",
+     
     
     });
   } catch (error) {
@@ -81,3 +85,50 @@ export const FindUser = async (req, res, next) => {
   }
 };
 
+export const GetUserByEmail = async (req, res, next) => {
+  console.log(req.params.email);
+  try {
+   const {email}=req.params;
+
+    const existingUser = await User.findOne({ email});
+    console.log(existingUser);
+    res.status(200).json({
+      success: true,
+      data:existingUser,
+     
+    });
+  } catch (error) {
+    // Handle Mongoose validation errors and other errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message);
+      return next(new ErrorHandler(validationErrors.join(', '), 400));
+    }
+    // Handle other errors
+    return next(error);
+  }
+};
+
+
+
+export const GetUserByID = async (req, res, next) => {
+  console.log(req.params.id);
+  try {
+   const {id}=req.params;
+  console.log("id : ",id);
+    const existingUser = await User.findById(id);
+    console.log(existingUser);
+    res.status(200).json({
+      success: true,
+      data:existingUser,
+     
+    });
+  } catch (error) {
+    // Handle Mongoose validation errors and other errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message);
+      return next(new ErrorHandler(validationErrors.join(', '), 400));
+    }
+    // Handle other errors
+    return next(error);
+  }
+};
