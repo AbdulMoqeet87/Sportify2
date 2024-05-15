@@ -4,7 +4,7 @@ export const getTop5LatestTournaments = async (req, res) => {
   try {
     // Retrieve the ground owner document by ID
     const groundOwnerId = req.params.id;
-    const groundOwner = await GroundOwner.findById(groundOwnerId);
+    const groundOwner = await c.findById(groundOwnerId);
 
     if (!groundOwner) {
       return res.status(404).json({ success: false, message: "Ground owner not found" });
@@ -27,26 +27,46 @@ export const getTop5LatestTournaments = async (req, res) => {
   }
 };
 
+export const createGroundOwner = async (req, res, next) => {
+  try {
+      const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds } = req.body;
 
-export const createGroundOwner = async (req, res) => {
-    try {
-      const { UserName, Password, email, PhoneNo, Grounds } = req.body;
+      if (!FirstName || !LastName || !email || !Password || !PhoneNo || !UserName) {
+          return next(new ErrorHandler("Please Fill Complete Form!", 400));
+      }
+
+      const existingUsername = await GroundOwner.findOne({ UserName });
+      if (existingUsername) {
+          return next(new ErrorHandler("User Already Exist!", 400));
+      }
+
       
-      const groundOwner = new GroundOwner({
-        UserName,
-        Password,
-        email,
-        PhoneNo,
-        Grounds // Assuming Grounds is already properly formatted in the request body
+      const existingEmail = await GroundOwner.findOne({ email });
+      if (existingEmail) {
+          return next(new ErrorHandler("Email Already In Use!", 400));
+      }
+      const existingPhoneNO = await GroundOwner.findOne({ PhoneNo });
+      if (existingPhoneNO) {
+          return next(new ErrorHandler("Phone No. Already In Use!", 400));
+      }
+
+      await GroundOwner.create({ FirstName, UserName, LastName, email, Password, PhoneNo, Grounds });
+
+      res.status(201).json({
+          success: true,
+          message: "Owner Account Created!",
       });
-  
-      await groundOwner.save();
-  
-      res.status(201).json({ success: true, data: groundOwner });
-    } catch (error) {
-      res.status(400).json({ success: false, error: error.message });
-    }
-  };
+  } catch (error) {
+      // Handle Mongoose validation errors and other errors
+      if (error.name === 'ValidationError') {
+          const validationErrors = Object.values(error.errors).map(err => err.message);
+          return next(new ErrorHandler(validationErrors.join(', '), 400));
+      }
+      // Handle other errors
+      return next(error);
+  }
+};
+
 
   export const getAllGroundOwnerNames = async (req, res) => {
     try {

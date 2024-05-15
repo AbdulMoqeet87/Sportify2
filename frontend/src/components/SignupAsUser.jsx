@@ -12,9 +12,10 @@ const Reservation = () => {
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [PhoneNo, setPhone] = useState("");
+  const [role, setRole] = useState("")
   const navigate = useNavigate();
 
-  const handleReservation = async (e) => {
+  const SignUpAsUser = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
@@ -40,10 +41,37 @@ const Reservation = () => {
       toast.error(error.response.data.message);
     }
   };
-  const MoveToSignUpPage =()=>{
-    navigate("/login");
-  }
 
+  const SignUpAsOwner = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:4000/GroundOwner/signup/",
+        { FirstName, LastName, email,UserName, PhoneNo,Password},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
+      setFirstName("");
+      setLastName("");
+      setPhone(" ");
+      setEmail("");
+      setUserName("");
+      setPassword("");
+      navigate("/login");
+    } 
+    catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+const MoveToSignUpPage =()=>{
+  navigate('/login');
+}
 
 return (
   <section className="reservation" id="reservation">
@@ -52,7 +80,7 @@ return (
       </div>
       <div className="banner" >
         <div className="reservation_form_box">
-          <h3>Sign Up</h3>
+          <h3 className="pt-4">Sign Up</h3>
          
           <form>
             <div className="flex-col">
@@ -96,15 +124,61 @@ return (
                 
                 onChange={(e) => setPhone(e.target.value)}
               />
+             
+             
+
             </div>
-            <h5 >Already have an account?  <span onClick={MoveToSignUpPage}  className="text-blue-500 hover:underline cursor-pointer">
+            
+  <div className="flex ml-14">           
+  <div className="mb-0">
+  {/* Radio options for user role */}
+  <label htmlFor="user" className="inline-block ml-2">
+    <input
+      type="radio"
+      id="user"
+      name="role"
+      value="user"
+      checked={role === "user"}
+      onChange={() => setRole("user")}
+      className="mr-4"
+    />
+    User
+  </label>
+</div>
+<div>
+  <label htmlFor="arena_owner" className="inline-block ml-2">
+    <input
+      type="radio"
+      id="arena_owner"
+      name="role"
+      value="arena_owner"
+      checked={role === "arena_owner"}
+      onChange={() => setRole("arena_owner")}
+      className="mr-4"
+    />
+    Arena Owner
+  </label>
+</div>
+</div>
+         
+                   <h5 >Already have an account?  <span onClick={MoveToSignUpPage}  className="text-blue-500 hover:underline cursor-pointer">
              Login </span> </h5>
-            <button type="submit" onClick={handleReservation}>                
+             <div className="pb-2">    
+            <button  type="submit" 
+            onClick={ role === "user"
+                      ? SignUpAsUser
+                      : SignUpAsOwner}
+                      disabled={!role} 
+                      
+                      >       
+                               
               Sign Up{" "}
               <span>
                 <HiOutlineArrowNarrowRight />
                 </span>            
             </button>
+            </div>
+
           </form>
         </div>
       </div>
