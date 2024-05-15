@@ -3,9 +3,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 const NB = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [Name, setName] = useState("");
   const navigate = useNavigate();
   const storedUserName = localStorage.getItem('userName');
 
@@ -16,7 +15,7 @@ const NB = () => {
 
   // const handleSearch = async () => {
   //   try {
-  //     const response = await axios.get(`http://localhost:4000/User/GetUserByID/${storedUserId}`);
+  //     const response = await axios.get(http://localhost:4000/User/GetUserByID/${storedUserId});
   //     console.log("navName", response.data.FirstName);
   //     if (response.data) {
   //       setName(response.data.data.FirstName);

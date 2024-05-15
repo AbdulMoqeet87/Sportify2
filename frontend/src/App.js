@@ -13,11 +13,7 @@ import Avail_Locations from './Pages/AvailableArenas/AvailableLocations';
 import SportCatagories_ from './Pages/SelectCategory/Catagories';
 import TournamentForm from './Pages/TournamentDetails';
 import Arenas from './Pages/Arenas/AvailableArenas';
-<<<<<<< HEAD
-import UserInformation from './Pages/UserInformation/Userinfo';
-=======
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
->>>>>>> 36d35ef037fb98753d4181d2054377b5fafa957f
 
 const App = () => {
   return (
@@ -34,11 +30,7 @@ const App = () => {
           <Route path='/login' element={<SignInPg/>}/> 
           <Route path='/success' element={<Success/>}/>
           <Route path='/searchResults' element={<SearchResults/>}/>
-<<<<<<< HEAD
-          <Route path='/UserInfo' element={<UserInformation/>}/>
-=======
           <Route path='/GroundInfo' element={<GroundInformation/>}/>
->>>>>>> 36d35ef037fb98753d4181d2054377b5fafa957f
 
           <Route path='*' element={<NotFound/>}/>
 
