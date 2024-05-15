@@ -25,7 +25,7 @@ const upload = multer({storage})
 
 
 router.get("/", getAllTournaments);
-router.post("/", createGroundOwner);
+router.post("/signup", createGroundOwner);
 router.get("/:category",getAllTournamentsByCategory)
 router.get('/grounds/:category',getGroundsByCategory)
 router.post('/newOwners',createManyGroundOwners)

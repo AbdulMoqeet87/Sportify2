@@ -60,6 +60,19 @@ const groundOwnerSchema = new Schema({
     minLength: [3, "Username must be at least 3 characters long."],
     maxLength: [255, "Username cannot exceed 255 characters."]
   },
+  FirstName: {
+    type: String,
+    required: true,
+    minLength: [3, "First Name must be at least 3 characters long."],
+    maxLength: [255, "Username cannot exceed 255 characters."]
+  },
+  LastName: {
+    type: String,
+    required: true,
+    minLength: [3, "Last Name must be at least 3 characters long."],
+    maxLength: [255, "Username cannot exceed 255 characters."]
+  },
+  
   Password: {
     type: String,
     required: true,
