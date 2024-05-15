@@ -37,7 +37,7 @@ const UserInfo = () => {
     return (
         <div className="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-xl">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-800">User Profile</h2>
+                <h2 className="text-2xl font-bold text-gray-800 ml-52">User Profile</h2>
                 <button
                     onClick={handleLogout}
                     className="text-white bg-red-500 px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none"
@@ -45,14 +45,14 @@ const UserInfo = () => {
                     Logout
                 </button>
             </div>
-            <div className="flex justify-center items-center mt-4 mb-6">
+            <div className="flex justify-center items-center mt-4 mb-14">
                 <img
                     src={user.profilePic || defaultAvatar}
                     alt="Profile"
                     className="w-24 h-24 rounded-full object-cover"
                 />
             </div>
-            <div>
+            <div className="ml-44">
                 <div className="flex mb-4">
                     <p className="w-24 text-gray-600 font-semibold">Name:</p>
                     <p>{user.FirstName} {user.LastName}</p>
