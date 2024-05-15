@@ -1,0 +1,76 @@
+const handleSearch = async (category) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/GroundOwner/${ground.Owner_email}`
+      );
+      console.log("API Response:", response.data); // Log the response data
+      if (response.data && Array.isArray(response.data.data)) {
+        setGround(response.data.data);
+        navigate("/Arenas", { state: { ground: response.data.data } }); // Navigate to search results page with grounds as state
+      } else {
+        console.error("Invalid API response:", response.data);
+      }
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
+import { FcBusinessman } from "react-icons/fc";
+
+import { MdEmail } from "react-icons/md";
+
+import { FaPhoneAlt } from "react-icons/fa";
+
+-----------------------------------------------------for adding already written reviews 
+import React, { useState } from "react";
+
+const GroundInformat = () => {
+  // Existing reviews data
+  const [reviews, setReviews] = useState(groundinfo.Reviews || []);
+  // State for tracking the number of reviews to display initially
+  const [visibleReviews, setVisibleReviews] = useState(3);
+  // State for controlling the display of the "More" button
+  const [showMoreButton, setShowMoreButton] = useState(reviews.length > visibleReviews);
+
+  // Function to handle displaying more reviews
+  const handleShowMoreReviews = () => {
+    setVisibleReviews(visibleReviews + 3); // Increase by 3 for example
+    // If all reviews are visible, hide the "More" button
+    if (visibleReviews + 3 >= reviews.length) {
+      setShowMoreButton(false);
+    }
+  };
+
+  return (
+    <div className="bg-white">
+      {/* Your existing code... */}
+      <div class="ml-40 mr-40">
+        <div class="mt-10 text-xl bg-gradient-to-r from-gray-800 via-gray-700 to-transparent py-2 px-4 text-white text-lg">
+          Ground Owner Information
+        </div>
+        {/* Existing reviews section */}
+        <div class="flex flex-col items-start ml-10 mt-4">
+          <h3 class="text-lg font-semibold">Reviews:</h3>
+          {/* Display the visible reviews */}
+          {reviews.slice(0, visibleReviews).map((review, index) => (
+            <p key={index} class="mt-2">
+              {review}
+            </p>
+          ))}
+          {/* Display the "More" button if there are more reviews to show */}
+          {showMoreButton && (
+            <button
+              class="mt-2 text-blue-500 hover:underline"
+              onClick={handleShowMoreReviews}
+            >
+              More
+            </button>
+          )}
+        </div>
+        {/* Your existing code... */}
+      </div>
+    </div>
+  );
+};
+
+export default GroundInformat;

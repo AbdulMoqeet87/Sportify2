@@ -122,17 +122,25 @@ const ArenasAvail = () => {
 
   // Use the useLocation hook to access the location state containing grounds data
   const { state } = useLocation();
-  const handleSearch = async (category) => {
+  const handleSearch1 = async (name) => {
     try {
-      const response = await axios.get(`http://localhost:4000/GroundOwner/grounds/${category}`);
-      console.log('API Response:', response.data); // Log the response data
-      if (response.data && Array.isArray(response.data.data)) {
-        setGround(response.data.data);
-        navigate('/Arenas', { state: { ground: response.data.data } }); // Navigate to search results page with grounds as state
+      const response = await axios.get(`http://localhost:4000/GroundOwner/grounds/${name}`);
+      console.log('API Response:', response.data);
+      if (response.data && typeof response.data === 'object') {
+        setGround(response.data); 
+        navigate('/GroundInfo', { state: { ground: response.data } });
       } else {
         console.error('Invalid API response:', response.data);
       }
     } catch (error) {
+      console.log('Error fetching data:', error);
+    }
+  };
+  const handleSearch = async (ground) => {
+    try {
+        navigate('/GroundInfo', { state: { ground } });
+      } 
+     catch (error) {
       console.log('Error fetching data:', error);
     }
   };
@@ -160,7 +168,7 @@ const ArenasAvail = () => {
                </div>
                <div className="  mt-0  items-right w-1/4">
                 <button 
-                  onClick={() => handleSearch(d.G_name)} // Pass the category name to handleSearch
+                  onClick={() => handleSearch(d)} 
                   className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent "
                 >
                   Book Now
