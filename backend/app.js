@@ -8,19 +8,6 @@ import reservationRouter from "./routes/reservationRoute.js";
 import GroundOwnerRouter from "./routes/GroundOwnerRoute.js";
 import UserRouter from "./routes/UserRoute.js";
 
-import multer from "multer";
-
-const storage = multer.diskStorage({
-    destination:function(req,file,cb){
-        return cb(null,"./public/Posters")
-
-    },
-    filename:function(req,file,cb){
-        return cb(null,`${Date.now()}_${file.originalname}`)
-    }
-})
-const upload = multer({storage})
-
 
 const app = express();
 app.use(express.json());

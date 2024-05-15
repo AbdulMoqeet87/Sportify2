@@ -33,13 +33,13 @@ const UserSchema = new Schema({
   FirstName: {
     type: String,
     required: true,
-    minLength: [3, "Username must be at least 3 characters long."],
+    minLength: [3, "First Name must be at least 3 characters long."],
     maxLength: [255, "Username cannot exceed 255 characters."]
   },
   LastName: {
     type: String,
     required: true,
-    minLength: [3, "Username must be at least 3 characters long."],
+    minLength: [3, "Last Name must be at least 3 characters long."],
     maxLength: [255, "Username cannot exceed 255 characters."]
   },
   
