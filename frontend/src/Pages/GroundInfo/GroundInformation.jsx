@@ -4,13 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaMapMarkerAlt,FaPhoneAlt, FaEnvelope } from "react-icons/fa"; // Importing the location icon from react-icons library
-import { FaStar } from 'react-icons/fa';
 import NB from "../../components/Navbar";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import StarRating from "../../components/Rating";
-import { FiX } from "react-icons/fi";
+
+
+
 
 const GroundInformat = () => {
   const data = [
