@@ -1,5 +1,5 @@
 import express from "express";
-import {getAllTournamentsByCategory, createManyGroundOwners,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames} from "../controller/GroundOwner.js";
+import {getAllTournamentsByCategory, createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames} from "../controller/GroundOwner.js";
 
 const router = express.Router();
 
@@ -29,6 +29,8 @@ router.post("/signup", createGroundOwner);
 router.get("/:category",getAllTournamentsByCategory)
 router.get('/grounds/:category',getGroundsByCategory)
 router.post('/newOwners',createManyGroundOwners)
+router.get('/login/:email',GetOwnerByEmail)
+
 
 router.post('/upload', upload.single(`file`), (req, res) => {
     try {

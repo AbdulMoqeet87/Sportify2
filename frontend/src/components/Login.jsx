@@ -25,8 +25,13 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response)
 
-      toast.success(response.data.message);
+      toast.success("Logged In Successfully");
+      console.log(response.data.message);
+
+      if(response.data.message==='user')
+        {
       const user=await axios.get(
         `http://localhost:4000/User/GetLoggedUser/${email}`,
         {
@@ -35,13 +40,38 @@ const Login = () => {
           },
           withCredentials: true,
         });
-        setUser(user.data.data);
         const userId = user.data.data._id;
         const userName = user.data.data.FirstName;
+      
         localStorage.setItem('userId', userId);
         localStorage.setItem('userName', userName);
         console.log("user",user.data.data.FirstName);
-      navigate('/home', { state: {User:user.data.data} });
+      navigate('/home'); 
+      
+      
+      }
+
+      
+      if(response.data.message==='owner')
+        {
+      const owner=await axios.get(
+        `http://localhost:4000/GroundOwner/login/${email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+      
+        const userId = owner.data.data._id;
+        const userName = owner.data.data.FirstName;       
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        console.log("Owner message",owner.data.data.FirstName);
+      navigate('/home');
+      }
+     
+
       setEmail("");
       setPassword("");
       

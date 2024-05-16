@@ -1,4 +1,5 @@
 import { User } from "../models/UserSchema.js";
+import { GroundOwner } from "../models/GroundOwnerSchema.js";
 import ErrorHandler from "../error/error.js";
 
 export const CreateUser = async (req, res, next) => {
@@ -53,27 +54,38 @@ export const FindUser = async (req, res, next) => {
     }
 
     const existingUser = await User.findOne({email});
+    const existingOwner= await GroundOwner.findOne({email});
+    
+    if (!existingUser&&!existingOwner) {
 
-    if (!existingUser) {
-      return next(new ErrorHandler("User doesn't exist!", 404));
+        return next(new ErrorHandler("User doesn't exist!", 404));
     }
-
-    // Verify the password
-    // const isPasswordValid = await existingUser.comparePassword(Password);
-    if (existingUser.Password!==Password) {
+    if(existingUser)
+      {
+        if (existingUser.Password!==Password) {
       return next(new ErrorHandler("Incorrect password!", 401));
     }
-
-    // Generate a token or session for the authenticated user
-    // const token = generateAuthToken(existingUser); // You need to implement generateAuthToken function
-
-    // Return success response with token
     res.status(200).json({
       success: true,
-      message: "Login successful!",
-     
+      message: "user",   
     
     });
+
+  }
+
+  if(existingOwner)
+    {
+      if (existingOwner.Password!==Password) {
+    return next(new ErrorHandler("Incorrect password!", 401));
+  }
+  res.status(200).json({
+    success: true,
+    message: "owner",     
+  });
+
+}
+     
+    
   } catch (error) {
     // Handle Mongoose validation errors and other errors
     if (error.name === 'ValidationError') {
