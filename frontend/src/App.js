@@ -15,7 +15,7 @@ import TournamentForm from './Pages/TournamentDetails';
 import Arenas from './Pages/Arenas/AvailableArenas';
 import UserInformation from './Pages/UserInformation/Userinfo';
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
-
+import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
 const App = () => {
   return (
     <>
@@ -33,7 +33,8 @@ const App = () => {
           <Route path='/searchResults' element={<SearchResults/>}/>
           <Route path='/UserInfo' element={<UserInformation/>}/>
           <Route path='/GroundInfo' element={<GroundInformation/>}/>
-
+          <Route path='/OwnerHome' element={<OwnerHome/>}/>
+          
           <Route path='*' element={<NotFound/>}/>
 
         </Routes>

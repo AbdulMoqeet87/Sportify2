@@ -45,6 +45,8 @@ const Login = () => {
       
         localStorage.setItem('userId', userId);
         localStorage.setItem('userName', userName);
+        localStorage.setItem('role', "user");
+        
         console.log("user",user.data.data.FirstName);
       navigate('/home'); 
       
@@ -67,8 +69,9 @@ const Login = () => {
         const userName = owner.data.data.FirstName;       
         localStorage.setItem('userId', userId);
         localStorage.setItem('userName', userName);
+        localStorage.setItem('role', "owner");
         console.log("Owner message",owner.data.data.FirstName);
-      navigate('/home');
+      navigate('/OwnerHome');
       }
      
 

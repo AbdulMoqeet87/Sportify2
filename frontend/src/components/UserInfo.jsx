@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const UserInfo = () => {
     const storedUserId = localStorage.getItem('userId');
+    const role=localStorage.getItem('role');
     const [user, setUser] = useState({});
     const navigate = useNavigate();
 
@@ -12,7 +13,8 @@ const UserInfo = () => {
     }, []);
 
     const handleSearch = async () => {
-        try {
+    if(role==='user')
+        {    try {
             const response = await axios.get(`http://localhost:4000/User/GetUserByID/${storedUserId}`);
             if (response.data) {
                 setUser(response.data.data);
@@ -22,7 +24,21 @@ const UserInfo = () => {
         } catch (error) {
             console.log('Error fetching data:', error);
         }
-    };
+    }
+    if(role==='owner')
+        {    try {
+            const response = await axios.get(`http://localhost:4000/GroundOwner/GetOwnerById/${storedUserId}`);
+            if (response.data) {
+                setUser(response.data.data);
+            } else {
+                console.error('Invalid API response:', response.data);
+            }
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        }
+    }
+
+};
 
     // Default user avatar image URL
     const defaultAvatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
@@ -31,6 +47,8 @@ const UserInfo = () => {
         // Implement your logout logic here
         // For example, clear user data from localStorage and redirect to login page
         localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('role');
         navigate('/login');
     };
 
@@ -47,7 +65,7 @@ const UserInfo = () => {
             </div>
             <div className="flex justify-center items-center mt-4 mb-14">
                 <img
-                    src={user.profilePic || defaultAvatar}
+                    src={  defaultAvatar}
                     alt="Profile"
                     className="w-24 h-24 rounded-full object-cover"
                 />
