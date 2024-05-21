@@ -2,26 +2,6 @@ import mongoose from "mongoose";
 import validator from "validator";
 const { Schema } = mongoose;
 
-const bookedSlotSchema = new Schema({
-    Date: {
-      type: String,
-    },
-    startTime: String,
-    endTime: String,
-  });
-
-const groundSchema = new Schema({
-  G_Name: String,
-  SportsCategory:String,
-  Town: String,
-  District: String,
-  City: String,
-  Address: String,
-  images:[String],
-  PerHourCharges: Number,
-  BookedSlots:[bookedSlotSchema]
-});
-
 const UserSchema = new Schema({
     
   UserName: {
@@ -59,7 +39,10 @@ const UserSchema = new Schema({
     minLength: [11, "Phone number must contain 11 digits."],
     maxLength: [11, "Phone number must contain 11 digits."]
   },
-  Grounds: [groundSchema]
+  city: {
+    type: String,
+    required: true
+  }
 });
 
 export const User = mongoose.model("User", UserSchema);

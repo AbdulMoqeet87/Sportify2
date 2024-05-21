@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FaCircleUser } from "react-icons/fa6";
 
 const NB = () => {
   const navigate = useNavigate();
@@ -51,8 +50,8 @@ navigate('/UserInfo');
               </form> */}
             </div>
             <button onClick={NavigateToProfile} className="text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="text-white">{storedUserName}</span>
-              <FontAwesomeIcon icon={faUser} className="ml-2" />
+              <span className="text-white flex flex-row text-xl">{storedUserName}<FaCircleUser className='text-3xl w-10 ml-3'/></span>
+              
             </button>
           </div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between collapse" id="navbarSupportedContent">

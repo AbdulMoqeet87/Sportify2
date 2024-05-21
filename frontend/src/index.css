@@ -1386,6 +1386,6 @@ button, input, optgroup, select, textarea {
   text-align: left;
   font-size: 20px;
   color: rgb(78, 77, 77);
-  height: 370px;
+  height: 2/3;
   align-content: flex-end;
 }

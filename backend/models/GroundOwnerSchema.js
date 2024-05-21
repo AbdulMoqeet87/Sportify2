@@ -7,13 +7,17 @@ const availableSlotsSchema = new Schema({
   startTime: String,
   endTime: String
 });
-const bookedSlotSchema = new Schema({
+const SlotSchema = new Schema({
     Date: {
       type: String,
     },
+    available: {
+      type: Boolean,
+      default:true,
+    },
     startTime: String,
     endTime: String,
-    bookedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    bookedBy: String,
   });
 const tournamentSchema = new Schema({
   TournamentName: String,
@@ -48,9 +52,9 @@ const groundSchema = new Schema({
   Address: String,
   images:[String],
   PerHourCharges: Number,
-  AvailableSlots: [availableSlotsSchema],
+  GroundOwnerEmail:String,
   Tournaments: [tournamentSchema],
-  BookedSlots:[bookedSlotSchema]
+  Slots:[SlotSchema]
 });
 
 const groundOwnerSchema = new Schema({

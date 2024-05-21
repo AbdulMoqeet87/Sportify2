@@ -242,3 +242,61 @@ export const createGroundOwner = async (req, res, next) => {
       res.status(400).json({ success: false, error: error.message });
     }
   };
+
+  
+  export const getOwnerByEmail = async (req, res) => {
+    try {
+      const { email } = req.params;
+      console.log("Email Andr:",email);
+      const groundOwner = await GroundOwner.findOne({email});
+  
+      res.status(200).json({ success: true, data: groundOwner });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  };
+
+
+export const markSlotBooked = async (req, res,next) => {
+  try {
+    const { slotId, userId } = req.body;
+    console.log("slot id ",slotId);
+    console.log("user id ",userId);
+
+    const owner = await GroundOwner.findOne({ 'Grounds.Slots._id': slotId });
+    console.log("andr owner",owner);
+    if (!owner) {
+      return res.status(404).json({ success: false, message: 'Ground owner not found' });
+    }
+
+    let slot;
+    owner.Grounds.forEach(ground => {
+      const foundSlot = ground.Slots.id(slotId);
+      if (foundSlot) {
+        slot = foundSlot;
+      }
+    });
+
+    if (!slot) {
+      return res.status(404).json({ success: false, message: 'Slot not found' });
+    }
+
+    slot.available = false;
+    slot.bookedBy = userId;
+
+    await owner.save();
+    res.status(200).json({ success: true, message: 'Slot marked as booked' });
+  } 
+  catch (error) {
+    // Handle Mongoose validation errors and other errors
+    if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => err.message);
+      return next(new ErrorHandler(validationErrors.join(', '), 400));
+    }
+    // Handle other errors
+    return next(error);
+  }
+};
+
+
+  
