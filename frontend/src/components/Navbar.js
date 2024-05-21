@@ -6,7 +6,7 @@ import { FaCircleUser } from "react-icons/fa6";
 const NB = () => {
   const navigate = useNavigate();
   const storedUserName = localStorage.getItem('userName');
-
+const role= localStorage.getItem('role');
 
   // useEffect(() => {
   //   handleSearch();
@@ -27,14 +27,27 @@ const NB = () => {
   // };
 const NavigateToProfile =()=>{
 navigate('/UserInfo');
+
 }
+
+let path;
+
+if(role==='user')
+  path='/home';
+
+if(role==='owner') 
+  path='/OwnerHome';
+
+ 
+
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-[rgb(0, 4, 65)] fixed-pos">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center">
-              <Link to="/home" className="text-white text-lg font-semibold mr-4 ml-6">
+              <Link to={path} className="text-white text-lg font-semibold mr-4 ml-6">
                 <img src="/images/Logo_sportify.jpg" alt="Navbar Logo" className="mr-4 w-[100px]" style={{ height: '30px', borderRadius: '10px' }} />
               </Link>
               {/* <form onSubmit={handleSearch} className="flex">

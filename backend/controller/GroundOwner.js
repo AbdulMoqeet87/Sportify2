@@ -300,3 +300,51 @@ export const markSlotBooked = async (req, res,next) => {
 
 
   
+
+  export const GetOwnerByEmail = async (req, res, next) => {
+    console.log(req.params.email);
+    try {
+     const {email}=req.params;
+  
+      const existingUser = await GroundOwner.findOne({ email});
+      console.log(existingUser);
+      res.status(200).json({
+        success: true,
+        data:existingUser,
+       
+      });
+    } catch (error) {
+      // Handle Mongoose validation errors and other errors
+      if (error.name === 'ValidationError') {
+        const validationErrors = Object.values(error.errors).map(err => err.message);
+        return next(new ErrorHandler(validationErrors.join(', '), 400));
+      }
+      // Handle other errors
+      return next(error);
+    }
+  };
+  
+
+  export const GetOwnerByID = async (req, res, next) => {
+    console.log(req.params.id);
+    try {
+     const {id}=req.params;
+    console.log("id : ",id);
+      const existingUser = await GroundOwner.findById(id);
+      console.log(existingUser);
+      res.status(200).json({
+        success: true,
+        data:existingUser,
+       
+      });
+    } catch (error) {
+      // Handle Mongoose validation errors and other errors
+      if (error.name === 'ValidationError') {
+        const validationErrors = Object.values(error.errors).map(err => err.message);
+        return next(new ErrorHandler(validationErrors.join(', '), 400));
+      }
+      // Handle other errors
+      return next(error);
+    }
+  };
+  
