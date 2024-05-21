@@ -1,5 +1,5 @@
 import express from "express";
-import {getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked} from "../controller/GroundOwner.js";
+import {GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
 
 const router = express.Router();
 
@@ -33,6 +33,14 @@ router.get('/getOwner/:email',getOwnerByEmail)
 router.post('/BookSlot',markSlotBooked)
 router.get('/login/:email',GetOwnerByEmail)
 router.get('/GetOwnerById/:id',GetOwnerByID)
+router.get('/GetGroundById/:id',GetGroundByID)
+router.patch('/UpdateOwner/:id',UdpateOwner)
+router.patch('/:ownerId/Ground/:groundId/Slot',AddSlot )
+router.get('/GroundOwners', getAllGroundOwnersDetails)
+router.get('/getReviews/:id',getReviewsOfGround)
+router.patch('/:ownerId/Ground/:groundId/Rating',AddRating )
+router.patch('/:ownerId/Ground/:groundId/Review',AddManyReviews )
+router.post('/AddReview',AddReview)
 
 
 router.post('/upload', upload.single(`file`), (req, res) => {

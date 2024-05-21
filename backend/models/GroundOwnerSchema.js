@@ -42,6 +42,26 @@ const tournamentSchema = new Schema({
     RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   }]
 });
+const ReviewSchema= new Schema({
+  Date: {
+    type: String,
+    required: true,
+  },
+  UserId: {
+    type: String,
+    required: true,
+  },
+  Review: {
+    type: String,
+    required: true,
+  },
+})
+const RatingSchema= new Schema({
+  NoOfRatings: Number,
+  SumOfRating: Number,
+  MeanRating:Number,
+})
+
 
 const groundSchema = new Schema({
   G_Name: String,
@@ -54,7 +74,9 @@ const groundSchema = new Schema({
   PerHourCharges: Number,
   GroundOwnerEmail:String,
   Tournaments: [tournamentSchema],
-  Slots:[SlotSchema]
+  Slots:[SlotSchema],
+  Reviews:[ReviewSchema],
+  Rating: [RatingSchema],
 });
 
 const groundOwnerSchema = new Schema({
