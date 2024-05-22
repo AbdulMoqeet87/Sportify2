@@ -1,5 +1,6 @@
 import { dbConnection } from "../database/dbConnection.js";
 import { GroundOwner } from "../models/GroundOwnerSchema.js";
+import ErrorHandler from "../error/error.js";
 
 export const getTop5LatestTournaments = async (req, res) => {
   try {
@@ -325,7 +326,7 @@ export const markSlotBooked = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "Slot not found" });
     }
-
+console.log("afterFinding Slot",slot);
     slot.available = false;
     slot.bookedBy = userId;
 
@@ -549,9 +550,10 @@ export const getReviewsOfGround = async (req, res) => {
 };
 
 export const GetGroundByID = async (req, res) => {
-  console.log("get ground by id ka andr");
   const { id } = req.params;
   console.log("id : ", id);
+  console.log("get ground by id ka andr",id);
+
   try {
     const owner = await GroundOwner.findOne({ "Grounds._id": id });
 
@@ -559,8 +561,9 @@ export const GetGroundByID = async (req, res) => {
       return res.status(404).send({ message: "Ground owner not found" });
     }
     const ground = owner.Grounds.id(id);
-    
-    res.status(200).send({ message: "Rating added successfully", ground });
+    console.log("ground",ground);
+    res.status(200).send({ message: "Ground Fetched ", ground });
+
   } catch (error) {
     console.log("Error getting review:", error.message);
     res.status(500).send({ message: "Internal Server Error", error });

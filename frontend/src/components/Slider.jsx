@@ -48,19 +48,9 @@ const Slider_ = () => {
   const navigate = useNavigate();
 
 
-  const handleSearch = async (category) => {
-    try {
-      const response = await axios.get(`http://localhost:4000/GroundOwner/grounds/${category}`);
-      console.log('API Response:', response.data); // Log the response data
-      if (response.data && Array.isArray(response.data.data)) {
-        setGround(response.data.data);
-        navigate('/Arenas', { state: { ground: response.data.data } }); // Navigate to search results page with grounds as state
-      } else {
-        console.error('Invalid API response:', response.data);
-      }
-    } catch (error) {
-      console.log('Error fetching data:', error);
-    }
+  const handleSearch = (category) => {
+        navigate('/Arenas', { state: {category} }); // Navigate to search results page with grounds as state
+    
   };
 
   const settings = {

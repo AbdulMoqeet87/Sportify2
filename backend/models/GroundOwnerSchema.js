@@ -47,9 +47,8 @@ const ReviewSchema= new Schema({
     type: String,
     required: true,
   },
-  UserId: {
+  UserName: {
     type: String,
-    required: true,
   },
   Review: {
     type: String,

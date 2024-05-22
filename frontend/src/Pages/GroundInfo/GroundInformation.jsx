@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa"; // Importing the location icon from react-icons library
 import NB from "../../components/Navbar";
 import Slider from "react-slick";
@@ -11,41 +10,9 @@ import "slick-carousel/slick/slick-theme.css";
 import StarRating from "../../components/Rating";
 
 const GroundInformat = () => {
-  const data = [
-    {
-      name: `cricket`,
-      img: `/Categories/Cricket.jpg`,
-      review: `Bht sad season ha`,
-      rating: 4.5,
-    },
-    {
-      name: `football`,
-      img: `/Categories/FootBall.jpg`,
-      review: `Bht sad season ha`,
-      rating: 3.8,
-    },
-    {
-      name: `hockey`,
-      img: `/Categories/Hockey.jpg`,
-      review: `Bht sad season ha`,
-      rating: 8.8,
-    },
 
-    {
-      name: `Badminton`,
-      img: `/Categories/Badminton.jpg`,
-      review: `Bht sad season ha`,
-      rating: 4.0,
-    },
-    {
-      name: `TableTennis`,
-      img: `/Categories/TableTennis.jpg`,
-      review: `Bht sad season ha`,
-      rating: 4.7,
-    },
-  ];
-  const [searchTerm, setSearchTerm] = useState("");
-  const [ground, setGround] = useState([]);
+
+  
   const navigate = useNavigate();
   //popup
   const [showModal, setShowModal] = useState(false);
@@ -55,47 +22,36 @@ const GroundInformat = () => {
   //review display
   const [reviewsToShow, setReviewsToShow] = useState(3);
   const [reviews, setReviews] = useState([]);
+  const[groundinfo,setGroundInfo]=useState(null)
 
   const { state } = useLocation();
-  console.log("Sate", state);
-  const groundinfo = state && state.ground ? state.ground : {};
+  console.log("Sate In front", state);
+const groundId= state && state.id? state.id:""
+console.log("ground", groundId);
 
-  useEffect(() => {
+
+useEffect(() => {
+  console.log("Inside useEffect with groundId:", groundId);
+  fetchData(groundId);
+}, []);
+
+
+const fetchData = async (gId) => {
+  try {
     
-    const fetchOwnerDetails = async () => {
-      try {
-        console.log("Email:", groundinfo.GroundOwnerEmail);
-        const response = await axios.get(
-          `http://localhost:4000/GroundOwner/getOwner/${groundinfo.GroundOwnerEmail}`
-        );
-        setOwnerDetails(response.data.data);
-      } catch (error) {
-        console.error("Error fetching owner details:", error);
-      }
-    };
-    const fetchReviews = async () => {
-      try {
-        const reviewsWithUserNames = await Promise.all(groundinfo.Reviews.map(async (review) => {
-          const userResponse = await axios.get(`http://localhost:4000/User/GetUserByID/${review.UserId}`);
-          console.log('reviews user response',userResponse);
-          return {
-            ...review,
-            userName: userResponse.data.data ? `${userResponse.data.data.FirstName} ${userResponse.data.data.LastName}` : 'Unknown User',
-          };
-        }));
-        setReviews(reviewsWithUserNames);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
+      const groundResponse = await axios.get(`http://localhost:4000/GroundOwner/GetGroundById/${gId}`);
+      setGroundInfo(groundResponse.data.ground);
 
-    if (groundinfo.GroundOwnerEmail) {
-      fetchOwnerDetails();}
+      // Fetch owner details
+      const ownerResponse = await axios.get(`http://localhost:4000/GroundOwner/getOwner/${groundResponse.data.ground.GroundOwnerEmail}`);
+      setOwnerDetails(ownerResponse.data.data);
+    
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+  
 
-      if (groundinfo._id) {
-        fetchReviews();
-    }
-  }, [groundinfo.GroundOwnerEmail]);
   console.log("Owner:", ownerDetails);
   const [reviewText, setReviewText] = useState("");
 
@@ -118,16 +74,21 @@ const GroundInformat = () => {
         `http://localhost:4000/GroundOwner/BookSlot`,
         { slotId, userId }
       );
+     
     } catch (error) {
       console.error("Error fetching owner details:", error);
     }
   };
 
   const closeModal = () => {
-    setShowModal(false);
-  };
+    setShowModal(false);   
+    window.location.reload();
 
+  };
+  const user=localStorage.getItem("userName");
+  console.log("UserNameLS",user);
   const handleSubmitReview = async () => {
+
     try {
       const response = await axios.post(
         `http://localhost:4000/GroundOwner/AddReview`,
@@ -135,11 +96,12 @@ const GroundInformat = () => {
           groundId: groundinfo._id,
           review: {
             Date: new Date().toISOString().split("T")[0],
-            UserId: localStorage.getItem("userId"),
+            UserName: localStorage.getItem("userName"),
             Review: reviewText,
           },
         }
       );
+      window.location.reload();
       setReviewText("");
     } catch (error) {
       console.log("Error entering review data:", error);
@@ -158,7 +120,7 @@ const GroundInformat = () => {
     slidesToScroll: 1,
     autoplay: false,
   };
-  return (
+  return (groundinfo&&(
     <div className="bg-white">
       <NB />
       <div className="ml-40 h-3/4 w-[1100px] mt-20 mb-2 pt-0 pb-0 ">
@@ -181,7 +143,7 @@ const GroundInformat = () => {
           <div className="w-2/6 bg-white h-[470px] text-teal-light-300 pl-20">
             <h1 className="Name-heading h-1/3">{groundinfo.G_Name}</h1>
             <p className="paragraph_ h-2/3">
-              <span class="flex flex-row justify-content mt-2">
+              <span className="flex flex-row justify-content mt-2">
                 <FaMapMarkerAlt className="mt-1 mr-2" />
                 {groundinfo.City}
               </span>
@@ -195,39 +157,39 @@ const GroundInformat = () => {
           </div>
         </div>
       </div>
-      <div class="ml-40 mr-40">
-        <div class="mt-10 text-xl bg-gradient-to-r from-gray-800 via-gray-700 to-transparent py-2 px-4 text-white text-lg">
+      <div className="ml-40 mr-40">
+        <div className="mt-10 text-xl bg-gradient-to-r from-gray-800 via-gray-700 to-transparent py-2 px-4 text-white text-lg">
           Ground Owner Information
         </div>
         {ownerDetails && (
-          <div class="flex items-center ml-10">
-            <p class="text-left text-xl text-gray-700 h-200 flex flex-col justify-content mb-10">
-              <span class="flex flex-row justify-content mt-2">
+          <div className="flex items-center ml-10">
+            <p className="text-left text-xl text-gray-700 h-200 flex flex-col justify-content mb-10">
+              <span className="flex flex-row justify-content mt-2">
                 {ownerDetails.FirstName} {ownerDetails.LastName}
               </span>
-              <span class="flex flex-row justify-content mt-2">
+              <span className="flex flex-row justify-content mt-2">
                 <FaPhoneAlt className="mt-2 mr-2" />
                 {ownerDetails.PhoneNo}
               </span>
-              <span class="flex flex-row justify-content mt-2">
+              <span className="flex flex-row justify-content mt-2">
                 <FaEnvelope className="mt-2 mr-2" />
                 {ownerDetails.email}
               </span>
             </p>
           </div>
         )}
-        <div class="text-xl bg-gradient-to-r from-gray-800 via-gray-700 to-transparent py-2 px-4 text-white text-lg">
+        <div className="text-xl bg-gradient-to-r from-gray-800 via-gray-700 to-transparent py-2 px-4 text-white text-lg">
           Available Slots
         </div>
-        <div class="flex flex-wrap gap-4 mt-4 mb-20">
+        <div className="flex flex-wrap gap-4 mt-4 mb-20">
           {groundinfo.Slots.filter((slot) => slot.available).map(
             (slot, index) => (
-              <div key={index} class="bg-gray-100 p-4 w-64">
-                <p class="font-bold">{slot.Date}</p>
+              <div key={index} className="bg-gray-100 p-4 w-64">
+                <p className="font-bold">{slot.Date}</p>
                 <p>Start Time: {slot.startTime}</p>
                 <p>End Time: {slot.endTime}</p>
                 <button
-                  class="mt-2 bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
+                  className="mt-2 bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
                   onClick={() => handleBookNow(slot)}
                 >
                   Book Now
@@ -247,7 +209,7 @@ const GroundInformat = () => {
             onChange={handleReviewChange}
           ></textarea>
         </div>
-        <div className="flex items-center ml-20 mt-4 mb-40">
+        <div className="flex items-center ml-20 mt-4 mb-20">
           <button
             className="bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
             onClick={handleSubmitReview}
@@ -256,14 +218,14 @@ const GroundInformat = () => {
           </button>
         </div>
         <div className="flex flex-col ml-20 mt-4 mb-40">
-          {reviews.slice(0, reviewsToShow).map((review, index) => (
+          {groundinfo.Reviews.slice(0, reviewsToShow).map((review, index) => (
             <div key={index} className="bg-gray-100 p-4 mb-2">
-              <p className="font-bold">{review.userName}</p>
+              <p className="font-bold">{review.UserName}</p>
               <p className="font-bold text-m">{review.Date}</p>
               <p>{review.Review}</p>
             </div>
           ))}
-          {reviewsToShow < reviews.length && (
+          {/* {reviewsToShow < reviews.length && ( */}{(
             <button
               className="mt-4 bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
               onClick={handleLoadMoreReviews}
@@ -298,7 +260,7 @@ const GroundInformat = () => {
         </div>
       )}
     </div>
-  );
+    )  );
 };
 
 export default GroundInformat;
