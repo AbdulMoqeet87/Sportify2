@@ -41,7 +41,7 @@ const fetchData = async (gId) => {
     
       const groundResponse = await axios.get(`http://localhost:4000/GroundOwner/GetGroundById/${gId}`);
       setGroundInfo(groundResponse.data.ground);
-
+      
       // Fetch owner details
       const ownerResponse = await axios.get(`http://localhost:4000/GroundOwner/getOwner/${groundResponse.data.ground.GroundOwnerEmail}`);
       setOwnerDetails(ownerResponse.data.data);
@@ -57,10 +57,6 @@ const fetchData = async (gId) => {
 
   const handleReviewChange = (event) => {
     setReviewText(event.target.value);
-  };
-
-  const handleRatingUpdate = (rating) => {
-    console.log({ rating });
   };
 
   const handleBookNow = async (slot) => {
@@ -112,10 +108,25 @@ const fetchData = async (gId) => {
     setReviewsToShow(reviewsToShow + 3);
   };
   const handleShowLessReviews = () => {
-    if((reviewsToShow - 3)>3)
-    {setReviewsToShow(reviewsToShow - 3);}
+    if(groundinfo.Reviews.length>=3)
+    {setReviewsToShow(3);}
   };
   
+  const handleRatingUpdate = async (rating) => {
+
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/GroundOwner/UpdateRating`,
+        {
+          groundId: groundinfo._id,
+          rating
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log("Error updating rating:", error);
+    }
+  };
 
   const settings = {
     dots: true,
@@ -156,7 +167,7 @@ const fetchData = async (gId) => {
               {groundinfo.Address}
               <br />
               <br />
-              Rating: {4.5} {/*groundinfo.Rating*/}
+              Rating: {groundinfo.Rating.MeanRating}
               <StarRating totalStars={5} updateRating={handleRatingUpdate} />
             </p>
           </div>
