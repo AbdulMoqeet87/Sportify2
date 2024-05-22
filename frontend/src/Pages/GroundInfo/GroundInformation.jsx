@@ -111,6 +111,11 @@ const fetchData = async (gId) => {
   const handleLoadMoreReviews = () => {
     setReviewsToShow(reviewsToShow + 3);
   };
+  const handleShowLessReviews = () => {
+    if((reviewsToShow - 3)>3)
+    {setReviewsToShow(reviewsToShow - 3);}
+  };
+  
 
   const settings = {
     dots: true,
@@ -225,12 +230,20 @@ const fetchData = async (gId) => {
               <p>{review.Review}</p>
             </div>
           ))}
-          {/* {reviewsToShow < reviews.length && ( */}{(
+          {reviewsToShow < groundinfo.Reviews.length && (
             <button
               className="mt-4 bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
               onClick={handleLoadMoreReviews}
             >
               Load More
+            </button>
+          )}
+          {reviewsToShow >= groundinfo.Reviews.length && (
+            <button
+              className="mt-4 bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
+              onClick={handleShowLessReviews}
+            >
+              Show Less
             </button>
           )}
         </div>
