@@ -55,11 +55,20 @@ const ReviewSchema= new Schema({
     required: true,
   },
 })
-const RatingSchema= new Schema({
-  NoOfRatings: Number,
-  SumOfRating: Number,
-  MeanRating:Number,
-})
+const RatingSchema = new Schema({
+  NoOfRatings: {
+    type: Number,
+    default: 0,
+  },
+  SumOfRating: {
+    type: Number,
+    default: 0,
+  },
+  MeanRating: {
+    type: Number,
+    default: 0,
+  },
+});
 
 
 const groundSchema = new Schema({
@@ -75,7 +84,7 @@ const groundSchema = new Schema({
   Tournaments: [tournamentSchema],
   Slots:[SlotSchema],
   Reviews:[ReviewSchema],
-  Rating: [RatingSchema],
+  Rating: RatingSchema,
 });
 
 const groundOwnerSchema = new Schema({

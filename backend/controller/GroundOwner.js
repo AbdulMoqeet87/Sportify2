@@ -569,3 +569,28 @@ export const GetGroundByID = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error", error });
   }
 };
+
+export const UpdateRating = async (req, res) => {
+  try {
+    const { groundId, rating } = req.body;
+    console.log("review ka andr");
+    console.log("ground id ", groundId);
+    console.log("rating", rating);
+
+    const owner = await GroundOwner.findOne({ "Grounds._id": groundId });
+    const ground = owner.Grounds.id(groundId);
+    console.log("ground in review", ground);
+    if (!ground) {
+      return res.status(404).json({ success: false, message: "Ground not found" });
+    }
+    ground.Rating.NoOfRatings=ground.Rating.NoOfRatings+1;
+    ground.Rating.SumOfRating=ground.Rating.SumOfRating+rating;
+    ground.Rating.MeanRating=ground.Rating.SumOfRating/ground.Rating.NoOfRatings;
+
+    await owner.save();
+    res.status(200).json({ success: true, message: "Rating udpated" });
+  } catch (error) {
+    console.log("Error updating rating:", error.message);
+    res.status(500).json({ success: false, message: "Unable to update rating" });
+  }
+};
