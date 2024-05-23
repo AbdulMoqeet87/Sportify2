@@ -23,7 +23,7 @@ const GroundInformat = () => {
   const [reviewsToShow, setReviewsToShow] = useState(3);
   const [reviews, setReviews] = useState([]);
   const[groundinfo,setGroundInfo]=useState(null)
-
+const [slots,setSlots]=useState([]);
   const { state } = useLocation();
   console.log("Sate In front", state);
 const groundId= state && state.id? state.id:""
@@ -41,11 +41,12 @@ const fetchData = async (gId) => {
     
       const groundResponse = await axios.get(`http://localhost:4000/GroundOwner/GetGroundById/${gId}`);
       setGroundInfo(groundResponse.data.ground);
+      setSlots(groundResponse.data.ground.Slots);
 
       // Fetch owner details
       const ownerResponse = await axios.get(`http://localhost:4000/GroundOwner/getOwner/${groundResponse.data.ground.GroundOwnerEmail}`);
       setOwnerDetails(ownerResponse.data.data);
-    
+      setReviews(groundResponse.data.ground.Reviews)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -74,7 +75,12 @@ const fetchData = async (gId) => {
         `http://localhost:4000/GroundOwner/BookSlot`,
         { slotId, userId }
       );
-     
+      setSlots((prevSlots) => 
+        prevSlots.map((s) => 
+          s._id === slotId ? { ...s, available: false } : s
+        )
+      );
+
     } catch (error) {
       console.error("Error fetching owner details:", error);
     }
@@ -82,7 +88,7 @@ const fetchData = async (gId) => {
 
   const closeModal = () => {
     setShowModal(false);   
-    window.location.reload();
+    
 
   };
   const user=localStorage.getItem("userName");
@@ -101,8 +107,16 @@ const fetchData = async (gId) => {
           },
         }
       );
-      window.location.reload();
-      setReviewText("");
+      const review = {
+        Date: new Date().toISOString().split("T")[0],
+        UserName: localStorage.getItem("userName"),
+        Review: reviewText,
+      };
+      setReviews(prevReviews => [...prevReviews, review]);
+
+      //setReviews();
+      // window.location.reload();
+       setReviewText("");
     } catch (error) {
       console.log("Error entering review data:", error);
     }
@@ -182,7 +196,7 @@ const fetchData = async (gId) => {
           Available Slots
         </div>
         <div className="flex flex-wrap gap-4 mt-4 mb-20">
-          {groundinfo.Slots.filter((slot) => slot.available).map(
+          {slots.filter((slot) => slot.available).map(
             (slot, index) => (
               <div key={index} className="bg-gray-100 p-4 w-64">
                 <p className="font-bold">{slot.Date}</p>
@@ -218,7 +232,7 @@ const fetchData = async (gId) => {
           </button>
         </div>
         <div className="flex flex-col ml-20 mt-4 mb-40">
-          {groundinfo.Reviews.slice(0, reviewsToShow).map((review, index) => (
+          {reviews.slice(0, reviewsToShow).map((review, index) => (
             <div key={index} className="bg-gray-100 p-4 mb-2">
               <p className="font-bold">{review.UserName}</p>
               <p className="font-bold text-m">{review.Date}</p>
