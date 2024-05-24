@@ -588,7 +588,8 @@ export const UpdateRating = async (req, res) => {
     ground.Rating.MeanRating=ground.Rating.SumOfRating/ground.Rating.NoOfRatings;
 
     await owner.save();
-    res.status(200).json({ success: true, message: "Rating udpated" });
+    res.status(200).json({ success: true, message: "Rating updated", data: ground.Rating.MeanRating });
+
   } catch (error) {
     console.log("Error updating rating:", error.message);
     res.status(500).json({ success: false, message: "Unable to update rating" });

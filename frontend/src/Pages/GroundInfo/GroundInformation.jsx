@@ -23,6 +23,8 @@ const GroundInformat = () => {
   const [reviewsToShow, setReviewsToShow] = useState(3);
   const [reviews, setReviews] = useState([]);
   const[groundinfo,setGroundInfo]=useState(null)
+  const[rating,setRating]=useState({})
+
 const [slots,setSlots]=useState([]);
   const { state } = useLocation();
   console.log("Sate In front", state);
@@ -42,11 +44,12 @@ const fetchData = async (gId) => {
       const groundResponse = await axios.get(`http://localhost:4000/GroundOwner/GetGroundById/${gId}`);
       setGroundInfo(groundResponse.data.ground);
       setSlots(groundResponse.data.ground.Slots);
-
+      setRating(groundResponse.data.ground.Rating.MeanRating);
+      setReviews(groundResponse.data.ground.Reviews)
+        
       // Fetch owner details
       const ownerResponse = await axios.get(`http://localhost:4000/GroundOwner/getOwner/${groundResponse.data.ground.GroundOwnerEmail}`);
       setOwnerDetails(ownerResponse.data.data);
-      setReviews(groundResponse.data.ground.Reviews)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -136,7 +139,10 @@ const fetchData = async (gId) => {
           rating
         }
       );
-      window.location.reload();
+      console.log("rating update",response.data);
+      setRating(response.data.data);
+
+
     } catch (error) {
       console.log("Error updating rating:", error);
     }
@@ -181,7 +187,7 @@ const fetchData = async (gId) => {
               {groundinfo.Address}
               <br />
               <br />
-              Rating: {groundinfo.Rating.MeanRating}
+              Rating: {rating}
               <StarRating totalStars={5} updateRating={handleRatingUpdate} />
             </p>
           </div>
