@@ -38,7 +38,7 @@ const ArenasAvail = () => {
           {ground.map((d, index) => (
             <div key={index} className="ground-card mt-10 bg-white h-[140px] w-[700px] text-white p-1 border border-white  border-black">
               <div className="flex">
-                <div className="h-36 bg-white">
+                <div className="relative h-36 bg-white">
                   <img src={d.images[0]} alt="" className="h-40 w-40 mr-10" />
                 </div>
                 <div className="flex flex-col mt-0 ml-0 items-left gap-0 pl-10 w-2/4">

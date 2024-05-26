@@ -26,7 +26,7 @@ const NewRelease = () => {
   }, []); // Empty dependency array to ensure the effect runs only once
 
   const settings = {
-    dots: true,
+    
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -40,7 +40,7 @@ const NewRelease = () => {
       <div className="mt-3">
         <Slider {...settings}>
           {tournaments.map((tournament, index) => (
-            <div key={index} className="bg-black h-[470px] w-[150px] text-white p-1 border border-white">
+            <div key={index} className="bg-black h-[440px] w-[150px] text-white p-1 border border-white">
               <div className="h-full w-auto bg-black flex justify-center items-center">
                 <img src={tournament.PosterPath} alt={tournament.TournamentName} className="h-full w-full object-cover" />
               </div>

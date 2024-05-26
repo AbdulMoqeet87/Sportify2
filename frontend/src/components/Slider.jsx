@@ -54,7 +54,7 @@ const Slider_ = () => {
   };
 
   const settings = {
-    dots: true,
+    
     infinite: true,
     speed: 500,
     slidesToShow: 5,
@@ -67,9 +67,9 @@ const Slider_ = () => {
       <div className="mt-10 mb-20">
         <Slider {...settings}>
           {data.map((d) => (
-            <div key={d.name} className=" bg-white h-[300px] w-[100px] text-white p-1 border border-gray-500 rounded-xl">
-              <div className="h-48 bg-white flex justify-center items-center rounded-xl">
-                <img src={d.img} alt="" className="h-60 w-60 rounded-xl" />
+            <div key={d.name} className=" bg-white h-[280px] w-[100px] text-white p-1 border border-gray-500 rounded-xl">
+              <div className="h-47 bg-white flex justify-center items-center rounded-xl">
+                <img src={d.img} alt="" className="h-40 w-60 rounded-xl" />
               </div>
               <div className="flex flex-col justify-center items-center gap-4 p-1">
                 <p className="text-xl text-black font-semibold">{d.name}</p>
