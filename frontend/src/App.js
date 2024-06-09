@@ -15,7 +15,7 @@ import TournamentForm from './Pages/TournamentDetails';
 import Arenas from './Pages/Arenas/AvailableArenas';
 import UserInformation from './Pages/UserInformation/Userinfo';
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
-import Tournament from './Pages/Tournament/Tournament';
+import Tournament from './Pages/Tournament/TournamentForm';
 import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
 const App = () => {
   return (

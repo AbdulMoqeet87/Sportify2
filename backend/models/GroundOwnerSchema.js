@@ -24,24 +24,31 @@ const tournamentSchema = new Schema({
   winningPrize: Number,
   PosterPath:String,
   SchedulePath:String,
-  startingDate: String,
-  endingDate: String,
-  RegStartingDate: String,
-  RegEndingDate: String,
+  startingDate: Date,
+  endingDate: Date,
+  RegStartingDate: Date,
+  RegEndingDate: Date,
+  MembersPerTeam: Number,
   winningTeamName: { type: String, default: null },
+  NoOfRegTeams:  {
+    type: Number,
+    default: 0,
+  },
   teamsCount: Number,
   Teams: [{
     name: String,
     captainName: String,
     Players: [{
       Name: String,
+      Email: String,
       Number: Number
     }],
-    RegistrationNumber: String,
-    RegistrationDate: String,
-    RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    RegistrationNumber: Date,
+    RegistrationDate: Date,
+    RegisteredBy: String
   }]
 });
+
 const ReviewSchema= new Schema({
   Date: {
     type: String,
