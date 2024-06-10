@@ -5,14 +5,14 @@ import { Reservation } from "../models/reservationSchema.js";
 const sendReservation = async (req, res, next) => {
   const { firstName, lastName, email, date, time, phone } = req.body;
   if (!firstName || !lastName || !email || !date || !time || !phone) {
-    return next(new ErrorHandler("Please Fill Complete Form!", 400));
+    return next(new ErrorHandler("Please Fill The Complete Form!", 400));
   }
 
   try {
     await Reservation.create({ firstName, lastName, email, date, time, phone });
     res.status(201).json({
       success: true,
-      message: "Account Created!",
+      message: "Account Created Successfully!",
     });
   } catch (error) {
     // Handle Mongoose validation errors

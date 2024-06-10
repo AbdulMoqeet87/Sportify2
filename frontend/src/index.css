@@ -1467,3 +1467,11 @@ align-items: center;
 .right-shadow {
   box-shadow: 10px 0 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05);
 }
+
+.bg_images_T{
+background-image: url(../public/tournamnet_back.jpg);
+background-repeat: repeat;
+}
+.text-shadow-black {
+  text-shadow:  -4px 2px 2px rgb(0, 0, 0);
+}

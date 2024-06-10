@@ -42,7 +42,7 @@ const NewRelease = () => {
           {tournaments.map((tournament, index) => (
             <div key={index} className="bg-black h-[440px] w-[150px] text-white p-1 border border-white">
               <div className="h-full w-auto bg-black flex justify-center items-center">
-                <img src={tournament.PosterPath} alt={tournament.TournamentName} className="h-full w-full object-cover" />
+                <img src={"/Posters/"+tournament.PosterPath} alt={tournament.TournamentName} className="h-full w-full object-cover" />
               </div>
             </div>
           ))}

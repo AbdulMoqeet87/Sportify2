@@ -2,11 +2,14 @@ import mongoose from "mongoose";
 import validator from "validator";
 const { Schema } = mongoose;
 
+// Schema that gives the available slots with theore date, start time, and end time
 const availableSlotsSchema = new Schema({
   Date: String,
   startTime: String,
   endTime: String
 });
+
+// Schema that defines slot details like the booking status and booked by which user
 const SlotSchema = new Schema({
     Date: {
       type: String,
@@ -19,36 +22,59 @@ const SlotSchema = new Schema({
     endTime: String,
     bookedBy: String,
   });
+
+// Schema that defines the tournament details such as name, prize, teams, and dates
 const tournamentSchema = new Schema({
   TournamentName: String,
   winningPrize: Number,
   PosterPath:String,
-  SchedulePath:String,
-  startingDate: Date,
-  endingDate: Date,
-  RegStartingDate: Date,
-  RegEndingDate: Date,
-  MembersPerTeam: Number,
+  NoOfRegTeams:  {
+    type: Number,
+    default: 0,},
+    MembersPerTeam:{
+      type: Number,
+      default: 0,},
+  startingDate: String,
+  endingDate: String,
+  RegStartingDate: String,
+  RegEndingDate: String,
   winningTeamName: { type: String, default: null },
   NoOfRegTeams:  {
     type: Number,
     default: 0,
   },
   teamsCount: Number,
-  Teams: [{
-    name: String,
-    captainName: String,
-    Players: [{
-      Name: String,
-      Email: String,
-      Number: Number
+  Teams: {
+    type: [{
+      name: String,
+      captainName: String,
+      Players: [{
+        Name: String,
+        Number: Number
+      }],
+      RegistrationNumber: String,
+      RegistrationDate: String,
+      //RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null }
     }],
-    RegistrationNumber: Date,
-    RegistrationDate: Date,
-    RegisteredBy: String
-  }]
+    default: null
+  }
+
+  // schema for teams-not needed
+  // Teams: [{
+  //   name: String,
+  //   captainName: String,
+  //   Players: [{
+  //     Name: String,
+  //     Email: String,
+  //     Number: Number
+  //   }],
+  //   RegistrationNumber: Date,
+  //   RegistrationDate: Date,
+  //   //RegisteredBy: String
+  // }]
 });
 
+// Schema that defines reviews with their corresponding date, username, and review content
 const ReviewSchema= new Schema({
   Date: {
     type: String,
@@ -62,6 +88,8 @@ const ReviewSchema= new Schema({
     required: true,
   },
 })
+
+// Schema that defines rating details including number of ratings, sum, and mean rating
 const RatingSchema = new Schema({
   NoOfRatings: {
     type: Number,
@@ -77,7 +105,7 @@ const RatingSchema = new Schema({
   },
 });
 
-
+// Schema that defines ground details including name, category, location, charges, and associated entities
 const groundSchema = new Schema({
   G_Name: String,
   SportsCategory:String,
@@ -94,43 +122,46 @@ const groundSchema = new Schema({
   Rating: RatingSchema,
 });
 
+// Schema that defines ground owner details including personal information, credentials, and owned grounds
 const groundOwnerSchema = new Schema({
   UserName: {
     type: String,
     required: true,
-    minLength: [3, "Username must be at least 3 characters long."],
-    maxLength: [255, "Username cannot exceed 255 characters."]
+    minLength: [3, "The Username MUST be atleast 3 character long!"],
+    maxLength: [255, "The Username CANNOT exceed 255 characters!"]
   },
   FirstName: {
     type: String,
-    required: true,
-    minLength: [3, "First Name must be at least 3 characters long."],
-    maxLength: [255, "Username cannot exceed 255 characters."]
+    // required: true,
+    minLength: [3, "The first-name MUST be at least 3 characters long."],
+    maxLength: [255, "The Username CANNOT exceed 255 characters!"]
   },
   LastName: {
     type: String,
-    required: true,
-    minLength: [3, "Last Name must be at least 3 characters long."],
-    maxLength: [255, "Username cannot exceed 255 characters."]
+    // required: true,
+    minLength: [3, "The last-name MUST be at least 3 characters long!"],
+    maxLength: [255, "The Username CANNOT exceed 255 characters!"]
   },
   
   Password: {
     type: String,
     required: true,
-    minLength: [6, "Password must be at least 6 characters long."]
+    minLength: [6, "Password must be at least 6 characters long !"]
   },
   email: {
     type: String,
     required: true,
-    validate: [validator.isEmail, "Provide a valid email"]
+    validate: [validator.isEmail, "Please provide a valid email !"]
   },
   PhoneNo: {
     type: String,
     required: true,
-    minLength: [11, "Phone number must contain 11 digits."],
-    maxLength: [11, "Phone number must contain 11 digits."]
+    // both min and max length of phone numbers is 11 digits so validation check is as below..
+    minLength: [11, "Phone number must contain 11 digits !"],
+    maxLength: [11, "Phone number must contain 11 digits !"]
   },
   Grounds: [groundSchema]
 });
 
+// create and export this groundowner svhema 
 export const GroundOwner = mongoose.model("GroundOwner", groundOwnerSchema);
