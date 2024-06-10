@@ -54,7 +54,7 @@ const tournamentSchema = new Schema({
       }],
       RegistrationNumber: String,
       RegistrationDate: String,
-      //RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null }
+      RegisteredBy: String
     }],
     default: null
   }

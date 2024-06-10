@@ -1,5 +1,5 @@
 import express from "express";
-import {GetBookedGrounds,RegisterTournament,UpdateRating,createTournament,GetMyGrounds,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
+import {createGround,GetBookedGrounds,RegisterTournament,UpdateRating,createTournament,GetMyGrounds,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
 import { GroundOwner } from "../models/GroundOwnerSchema.js";
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.get('/groundsById/:id',GetMyGrounds)
 const storagePoster = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("insideStorage")
-         cb(null, "E:/SportsArensProject/frontend/public/Posters");
+         cb(null, "C:/Users/Micro/Sportify2/frontend/public/Posters");
     },
     filename: function (req, file, cb) {
         cb(null,`${Date.now()}_${file.originalname}`)
@@ -84,4 +84,16 @@ handling POST requests to the endpoint `/tournaments/;g_id`. */
 // });
 
 router.post('/tournaments/:g_id', uploadPoster.single('PosterPath'),createTournament); 
+
+const G_ImgStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'C:/Users/Micro/Sportify2/frontend/public/images');
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
+  });
+  
+  const G_Image = multer({ G_ImgStorage });
+  router.post('/CreateGround/:id', G_Image.single('Image'),createGround); 
 export default router;
