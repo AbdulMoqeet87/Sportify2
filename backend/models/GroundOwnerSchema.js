@@ -23,24 +23,27 @@ const tournamentSchema = new Schema({
   TournamentName: String,
   winningPrize: Number,
   PosterPath:String,
-  SchedulePath:String,
+
   startingDate: String,
   endingDate: String,
   RegStartingDate: String,
   RegEndingDate: String,
   winningTeamName: { type: String, default: null },
   teamsCount: Number,
-  Teams: [{
-    name: String,
-    captainName: String,
-    Players: [{
-      Name: String,
-      Number: Number
+  Teams: {
+    type: [{
+      name: String,
+      captainName: String,
+      Players: [{
+        Name: String,
+        Number: Number
+      }],
+      RegistrationNumber: String,
+      RegistrationDate: String,
+      //RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null }
     }],
-    RegistrationNumber: String,
-    RegistrationDate: String,
-    RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-  }]
+    default: null
+  }
 });
 const ReviewSchema= new Schema({
   Date: {
@@ -96,13 +99,13 @@ const groundOwnerSchema = new Schema({
   },
   FirstName: {
     type: String,
-    required: true,
+    // required: true,
     minLength: [3, "First Name must be at least 3 characters long."],
     maxLength: [255, "Username cannot exceed 255 characters."]
   },
   LastName: {
     type: String,
-    required: true,
+    // required: true,
     minLength: [3, "Last Name must be at least 3 characters long."],
     maxLength: [255, "Username cannot exceed 255 characters."]
   },

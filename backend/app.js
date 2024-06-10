@@ -8,10 +8,10 @@ import reservationRouter from "./routes/reservationRoute.js";
 import GroundOwnerRouter from "./routes/GroundOwnerRoute.js";
 import UserRouter from "./routes/UserRoute.js";
 
-
 const app = express();
-app.use(express.json());
 
+app.use("/image",express.static('MyImages'));
+app.use(express.json());
 
 app.use(cors({
     origin: "http://localhost:3000",
@@ -29,5 +29,6 @@ app.use("/GroundOwner", GroundOwnerRouter);
 app.use("/User",UserRouter)
 
 dbConnection();
+
 app.use(errorMiddleware)
 export default app; 

@@ -11,11 +11,10 @@ import './App.css'
 
 import Avail_Locations from './Pages/AvailableArenas/AvailableLocations';
 import SportCatagories_ from './Pages/SelectCategory/Catagories';
-import TournamentForm from './Pages/TournamentDetails';
 import Arenas from './Pages/Arenas/AvailableArenas';
 import UserInformation from './Pages/UserInformation/Userinfo';
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
-import Tournament from './Pages/Tournament/Tournament';
+import Tournament from './Pages/TournamentDeatils/TournamentDetails';
 import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
 const App = () => {
   return (
@@ -24,7 +23,7 @@ const App = () => {
         <Routes>
           
           {/* <Route path='/' element={<Home/>}/>  */}
-          <Route path='/' element={<TournamentForm/>}/>
+          <Route path='/' element={<Tournament/>}/>
           <Route path='/home' element={<Home/>}/> 
           <Route path='/Arenas' element={<Arenas/>}/> 
           <Route path='/categories' element={<SportCatagories_/>}/> 

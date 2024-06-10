@@ -1,7 +1,7 @@
 import { dbConnection } from "../database/dbConnection.js";
 import { GroundOwner } from "../models/GroundOwnerSchema.js";
 import ErrorHandler from "../error/error.js";
-
+import mongoose from "mongoose";
 export const getTop5LatestTournaments = async (req, res) => {
   try {
     // Retrieve the ground owner document by ID
@@ -126,9 +126,7 @@ export const getAllGroundOwnersWithGroundNames = async (req, res) => {
 };
 
 export const getAllGroundOwnersWithGroundAndTournamentNames = async (
-  req,
-  res
-) => {
+  req, res) => {
   try {
     // Retrieve all ground owners from the database
     const groundOwners = await GroundOwner.find();
@@ -569,6 +567,33 @@ export const GetGroundByID = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error", error });
   }
 };
+export const GetMyGrounds = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    // Find the ground owner by ID
+    const groundOwner = await GroundOwner.findById(id);
+
+    // If ground owner not found, return an error response
+    if (!groundOwner) {
+      return res.status(404).json({
+        success: false,
+        message: "Ground owner not found"
+      });
+    }
+
+    // Extract and return the grounds
+    const grounds = groundOwner.Grounds;
+
+    res.status(200).json({
+      success: true,
+      data: grounds
+    });
+  } catch (error) {
+    // Handle errors
+    return next(new ErrorHandler(error.message, 500));
+  }
+};
 
 export const UpdateRating = async (req, res) => {
   try {
@@ -593,5 +618,62 @@ export const UpdateRating = async (req, res) => {
   } catch (error) {
     console.log("Error updating rating:", error.message);
     res.status(500).json({ success: false, message: "Unable to update rating" });
+  }
+};
+
+export const createTournament = async (req, res) => {
+  console.log("tournament back");
+
+  try {
+    const posterPath = req.file.filename;
+    //const schedulePath = req.file.path;
+    console.log("posterPath", posterPath);
+console.log("req file",req.file)
+    const { g_id } = req.params;
+    const {
+      TournamentName,
+      winningPrize,
+      startingDate,
+      endingDate,
+      RegStartingDate,
+      RegEndingDate,
+      teamsCount
+    } = req.body;
+
+    const tournamentData = {
+      TournamentName,
+      winningPrize,
+      PosterPath: posterPath,
+      startingDate,
+      endingDate,
+      RegStartingDate,
+      RegEndingDate,
+      teamsCount
+    };
+
+    // Find ground owner and push the new tournament into the specified ground
+    const groundOwner = await GroundOwner.findOne({ "Grounds._id": g_id });
+console.log("GOwner",groundOwner);
+    if (!groundOwner) {
+      return res.status(404).json({ success: false, message: "Ground not found" });
+    }
+
+    // Find the specific ground by id
+    const ground = groundOwner.Grounds.id(g_id);
+
+    if (!ground) {
+      return res.status(404).json({ success: false, message: "Ground not found" });
+    }
+
+    // Push the new tournament into the Tournaments array of the ground
+    ground.Tournaments.push(tournamentData);
+
+    // Save the changes to the ground owner document
+    await groundOwner.save();
+
+    res.status(200).json({ success: true, message: "Tournament created successfully", tournament: tournamentData });
+  } catch (error) {
+    console.error("Error creating tournament:", error);
+    res.status(500).json({ success: false, error: "Error creating tournament" });
   }
 };
