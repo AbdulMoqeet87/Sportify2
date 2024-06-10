@@ -255,7 +255,7 @@ export const getGroundsByCategory = async (req, res) => {
   try {
     // Extract the category from request parameters
     const { category } = req.params;
-
+    console.log("category: ",category);
     // Find all ground owners with grounds matching the specified category
     const groundOwners = await GroundOwner.find({
       "Grounds.SportsCategory": category,
@@ -598,13 +598,12 @@ export const GetMyGrounds = async (req, res, next) => {
 export const UpdateRating = async (req, res) => {
   try {
     const { groundId, rating } = req.body;
-    console.log("review ka andr");
     console.log("ground id ", groundId);
     console.log("rating", rating);
 
     const owner = await GroundOwner.findOne({ "Grounds._id": groundId });
     const ground = owner.Grounds.id(groundId);
-    console.log("ground in review", ground);
+
     if (!ground) {
       return res.status(404).json({ success: false, message: "Ground not found" });
     }
@@ -620,6 +619,54 @@ export const UpdateRating = async (req, res) => {
     res.status(500).json({ success: false, message: "Unable to update rating" });
   }
 };
+
+
+export const RegisterTournament = async (req, res) => {
+  try {
+    const {
+      teamName,
+      teamCaptain,
+      members,
+      tournamentId,
+      userId,
+      groundId
+    } = req.body;
+
+    const groundOwner = await GroundOwner.findOne({ "Grounds.Tournaments._id": tournamentId });
+    const ground = groundOwner.Grounds.id(groundId);
+    const tournament = ground.Tournaments.id(tournamentId);
+
+    if (tournament.NoOfRegTeams >= tournament.teamsCount) {
+      return res.status(400).json({ error: "Team registration is closed for this tournament" });
+    }
+    
+    tournament.NoOfRegTeams=tournament.NoOfRegTeams+1;
+    const newTeam = {
+      name: teamName,
+      captainName: teamCaptain,
+      Players: members.map(member => ({
+        Name: member.name,
+        Email: member.email,
+        Number: member.contact
+      })),
+      RegistrationNumber: tournament.NoOfRegTeams,
+      RegistrationDate: new Date(),
+      RegisteredBy: userId
+    };
+
+    tournament.Teams.push(newTeam);
+
+    await groundOwner.save();
+
+    res.status(200).json({ message: "Team registration successful" });
+  } catch (error) {
+    console.error("Error registering team:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
 
 export const createTournament = async (req, res) => {
   console.log("tournament back");

@@ -14,7 +14,7 @@ import SportCatagories_ from './Pages/SelectCategory/Catagories';
 import Arenas from './Pages/Arenas/AvailableArenas';
 import UserInformation from './Pages/UserInformation/Userinfo';
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
-import Tournament from './Pages/TournamentDeatils/TournamentDetails';
+import Tournament from './Pages/TournamentDeatils/TournamentFormDetails';
 import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
 const App = () => {
   return (

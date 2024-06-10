@@ -1,5 +1,5 @@
 import express from "express";
-import {UpdateRating,createTournament,GetMyGrounds,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
+import {RegisterTournament,UpdateRating,createTournament,GetMyGrounds,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
 import { GroundOwner } from "../models/GroundOwnerSchema.js";
 const router = express.Router();
 
@@ -40,6 +40,7 @@ router.patch('/:ownerId/Ground/:groundId/Rating',AddRating )
 router.patch('/:ownerId/Ground/:groundId/Review',AddManyReviews )
 router.post('/AddReview',AddReview)
 router.post('/UpdateRating',UpdateRating)
+router.post('/TournamentRegistration',RegisterTournament)
 router.get('/groundsById/:id',GetMyGrounds)
 
 const storagePoster = multer.diskStorage({
