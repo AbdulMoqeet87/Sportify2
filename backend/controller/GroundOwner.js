@@ -606,6 +606,7 @@ export const RegisterTournament = async (req, res) => {
       userId,
       groundId
     } = req.body;
+    console.log("register tournament, user id: ",userId);
 
     const groundOwner = await GroundOwner.findOne({ "Grounds.Tournaments._id": tournamentId });
     const ground = groundOwner.Grounds.id(groundId);
@@ -640,4 +641,56 @@ export const RegisterTournament = async (req, res) => {
   }
 };
 
+export const GetBookedGrounds = async (req, res) => {
+  const { id } = req.params; 
+  console.log("Fetching booked grounds and tournaments for user ID: ", id);
+
+  try {
+    const grounds = await GroundOwner.find({}, { Grounds: 1 }); 
+
+    let bookedGrounds = [];
+    let participatedTournaments = [];
+
+    grounds.forEach((owner) => {
+      owner.Grounds.forEach((ground) => {
+        // Check for booked slots
+        const bookedSlots = ground.Slots.filter(slot => slot.bookedBy === id);
+        if (bookedSlots.length > 0) {
+          bookedSlots.forEach(slot => {
+            bookedGrounds.push({
+              groundName: ground.G_Name,
+              location: `${ground.Town}, ${ground.District}, ${ground.City}`,
+              slotDetails: slot
+            });
+          });
+        }
+
+        // Check for participated tournaments
+        ground.Tournaments.forEach((tournament) => {
+          const userTeams = tournament.Teams.filter(team => team.RegisteredBy === id );
+          if (userTeams.length > 0) {
+            participatedTournaments.push({
+              groundName: ground.G_Name,
+              location: `${ground.Town}, ${ground.District}, ${ground.City}`,
+              tournamentDetails: tournament,
+              userTeams: userTeams
+            });
+          }
+        });
+      });
+    });
+
+    res.status(200).json({
+      success: true,
+      bookedGrounds,
+      participatedTournaments
+    });
+  } catch (error) {
+    console.error("Error fetching booked grounds and tournaments: ", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error"
+    });
+  }
+};
 

@@ -1,5 +1,5 @@
 import express from "express";
-import {RegisterTournament,UpdateRating,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
+import {GetBookedGrounds,RegisterTournament,UpdateRating,GetGroundByID,getReviewsOfGround,AddReview,AddManyReviews,AddRating,getAllGroundOwnersDetails,AddSlot,getAllTournamentsByCategory, GetOwnerByID,createManyGroundOwners,GetOwnerByEmail,getGroundsByCategory,getTop5LatestTournaments,getAllTournaments,getAllGroundOwnersWithGroundNames,getAllGroundOwnersWithGroundAndTournamentNames ,createGroundOwner,getAllGroundOwnerNames,getOwnerByEmail,markSlotBooked,UdpateOwner} from "../controller/GroundOwner.js";
 
 const router = express.Router();
 
@@ -33,6 +33,7 @@ router.get('/getOwner/:email',getOwnerByEmail)
 router.post('/BookSlot',markSlotBooked)
 router.get('/login/:email',GetOwnerByEmail)
 router.get('/GetOwnerById/:id',GetOwnerByID)
+router.get('/GetBookedGrounds/:id',GetBookedGrounds)
 router.get('/GetGroundById/:id',GetGroundByID)
 router.patch('/UpdateOwner/:id',UdpateOwner)
 router.patch('/:ownerId/Ground/:groundId/Slot',AddSlot )
