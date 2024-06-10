@@ -134,32 +134,34 @@ const groundOwnerSchema = new Schema({
     type: String,
     // required: true,
     minLength: [3, "The first-name MUST be at least 3 characters long."],
-    maxLength: [255, "Username cannot exceed 255 characters."]
+    maxLength: [255, "The Username CANNOT exceed 255 characters!"]
   },
   LastName: {
     type: String,
     // required: true,
-    minLength: [3, "Last Name must be at least 3 characters long."],
-    maxLength: [255, "Username cannot exceed 255 characters."]
+    minLength: [3, "The last-name MUST be at least 3 characters long!"],
+    maxLength: [255, "The Username CANNOT exceed 255 characters!"]
   },
   
   Password: {
     type: String,
     required: true,
-    minLength: [6, "Password must be at least 6 characters long."]
+    minLength: [6, "Password must be at least 6 characters long !"]
   },
   email: {
     type: String,
     required: true,
-    validate: [validator.isEmail, "Provide a valid email"]
+    validate: [validator.isEmail, "Please provide a valid email !"]
   },
   PhoneNo: {
     type: String,
     required: true,
-    minLength: [11, "Phone number must contain 11 digits."],
-    maxLength: [11, "Phone number must contain 11 digits."]
+    // both min and max length of phone numbers is 11 digits so validation check is as below..
+    minLength: [11, "Phone number must contain 11 digits !"],
+    maxLength: [11, "Phone number must contain 11 digits !"]
   },
   Grounds: [groundSchema]
 });
 
+// create and export this groundowner svhema 
 export const GroundOwner = mongoose.model("GroundOwner", groundOwnerSchema);
