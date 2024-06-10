@@ -23,7 +23,12 @@ const tournamentSchema = new Schema({
   TournamentName: String,
   winningPrize: Number,
   PosterPath:String,
-
+  NoOfRegTeams:  {
+    type: Number,
+    default: 0,},
+    MembersPerTeam:{
+      type: Number,
+      default: 0,},
   startingDate: String,
   endingDate: String,
   RegStartingDate: String,
@@ -48,18 +53,18 @@ const tournamentSchema = new Schema({
     }],
     default: null
   }
-  Teams: [{
-    name: String,
-    captainName: String,
-    Players: [{
-      Name: String,
-      Email: String,
-      Number: Number
-    }],
-    RegistrationNumber: Date,
-    RegistrationDate: Date,
-    RegisteredBy: String
-  }]
+  // Teams: [{
+  //   name: String,
+  //   captainName: String,
+  //   Players: [{
+  //     Name: String,
+  //     Email: String,
+  //     Number: Number
+  //   }],
+  //   RegistrationNumber: Date,
+  //   RegistrationDate: Date,
+  //   //RegisteredBy: String
+  // }]
 });
 
 const ReviewSchema= new Schema({
