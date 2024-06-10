@@ -7,6 +7,7 @@ const availableSlotsSchema = new Schema({
   startTime: String,
   endTime: String
 });
+
 const SlotSchema = new Schema({
     Date: {
       type: String,
@@ -19,6 +20,7 @@ const SlotSchema = new Schema({
     endTime: String,
     bookedBy: String,
   });
+
 const tournamentSchema = new Schema({
   TournamentName: String,
   winningPrize: Number,
@@ -53,6 +55,8 @@ const tournamentSchema = new Schema({
     }],
     default: null
   }
+
+  // schema for teams-not needed
   // Teams: [{
   //   name: String,
   //   captainName: String,
