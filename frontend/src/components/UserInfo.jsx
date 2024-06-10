@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';  // Importing arrow icon from react-icons
+
 
 const UserInfo = () => {
     const storedUserId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
     const [user, setUser] = useState({});
+    const [bookedGrounds, setBookedGrounds] = useState([]);
+    const [participatedTournaments, setParticipatedTournaments] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,14 +40,23 @@ const UserInfo = () => {
                 console.log('Error fetching data:', error);
             }
         }
+        try {
+            const response = await axios.get(`http://localhost:4000/GroundOwner/GetBookedGrounds/${storedUserId}`);
+            if (response.data) {
+                setBookedGrounds(response.data.bookedGrounds);
+                setParticipatedTournaments(response.data.participatedTournaments);
+            } else {
+                console.error('Invalid API response:', response.data);
+            }
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        }
     };
 
     // Default user avatar image URL
     const defaultAvatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
 
     const handleLogout = () => {
-        // Implement your logout logic here
-        // For example, clear user data from localStorage and redirect to login page
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
         localStorage.removeItem('role');
@@ -54,7 +65,7 @@ const UserInfo = () => {
 
     return (
         <div className="relative">
-            <div className="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-xl">
+            <div className="max-w-xl mx-auto mt-20 bg-white p-6 rounded-lg shadow-xl">
                 <div className="flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-gray-800 ml-52">User Profile</h2>
                     <button
@@ -90,7 +101,55 @@ const UserInfo = () => {
                     </div>
                 </div>
             </div>
-            
+            <div className="max-w-xl mx-auto mt-20 bg-white p-6 rounded-lg shadow-xl">
+            <h2 className="text-2xl font-bold text-gray-800">Booked Grounds</h2>
+                <div className="flex flex-col gap-4 mt-4 mb-20">
+                    {bookedGrounds.length > 0 ? (
+                        bookedGrounds.map((ground, index) => (
+                            <div key={index} className="bg-gray-100 p-4 rounded-lg">
+                                <p className="font-bold">{ground.groundName}</p>
+                                <p>Location: {ground.location}</p>
+                                <p>Date: {ground.slotDetails.Date}</p>
+                                <p>Start Time: {ground.slotDetails.startTime}</p>
+                                <p>End Time: {ground.slotDetails.endTime}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No booked grounds found.</p>
+                    )}
+                </div>
+            </div>
+            <div className="max-w-xl mx-auto mt-20 bg-white p-6 rounded-lg shadow-xl">
+            <h2 className="text-2xl font-bold text-gray-800 ">Participated Tournaments</h2>
+                <div className="flex flex-col gap-4 mt-4 mb-20">
+                    {participatedTournaments.length > 0 ? (
+                        participatedTournaments.map((tournament, index) => (
+                            <div key={index} className="bg-gray-100 p-4 rounded-lg">
+                                <p className="font-bold">{tournament.tournamentDetails.TournamentName}</p>
+                                <p>Ground: {tournament.groundName}</p>
+                                <p>Location: {tournament.location}</p>
+                                <p>Starting Date: {new Date(tournament.tournamentDetails.startingDate).toLocaleDateString()}</p>
+                                <p>Ending Date: {new Date(tournament.tournamentDetails.endingDate).toLocaleDateString()}</p>
+                                <p>Teams:</p>
+                                {tournament.userTeams.map((team, teamIndex) => (
+                                    <div key={teamIndex} className="pl-2">
+                                        <p className="font-bold">{team.name}</p>
+                                        <p>Captain: {team.captainName}</p>
+                                        <p>Players:</p>
+                                        {team.Players.map((player, playerIndex) => (
+                                            <div key={playerIndex} className="pl-4">
+                                                <p>{player.Name} - {player.Email}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        ))
+                    ) : (
+                        <p>No participated tournaments found.</p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };
