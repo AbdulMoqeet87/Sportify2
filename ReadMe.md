@@ -1,85 +1,34 @@
-Sportify2
-Sportify2 is a full-stack web application that enhances your sports arena bookingg experience by integrating with the Spotify API. The application features a robust backend server and a dynamic frontend interface. The idea is that all Sports Arenas arenas like Gaddaffi Stadium, Lahore are present in the database. Code links the Data to allow users to make reservation in any of the available sport arena they want.
+**Project Introduction: Sportify2**
 
-Table of Contents
-->Features
-->Installation
-->Backend Setup
-->Frontend Setup
-->Usage
-->Folder Structure
-->License
+**Project Overview**
 
-Features
-->Sportify Integration: Seamlessly connect to to all sport arenas in the selected location and in given time slot.
-->Responsive Design: Enjoy a user-friendly interface across all devices.
-->Real-time Updates: Experience real-time updates and interactions with the Sportify API i.e if resrvation made by anther user before, chnages to datbase saved and transaction processed and status of that stadium wil be booked/un-available for anither user who wants to book in the same slot
+Seamlessly discover and book local sports arenas, join exciting tournaments, and allows ground owners to post their venues and host tournaments.
 
-Installation
+**Features**
+Ground Booking System: Users can book sports grounds based on available slots.
+Tournament Management: Organize and manage sports tournaments, including team registrations and scheduling.
+User Reviews and Ratings: Users can review and rate grounds and tournaments.
+Music Integration: Seamlessly integrate with Spotify for an enhanced user experience.
 
-Prerequisites
-Ensure you have the following installed:
+****Technologies and Languages Used******
 
-Node.js (version 12 or higher)
-npm (version 6 or higher)
+**Backend**
 
-Backend Setup
-Install Dependencies
-Navigate to the backend directory and install the required dependencies:
-    cd backend
-    npm install
+Node.js: A JavaScript runtime used for building the server-side application.
+Express.js: A web framework for Node.js, used to create the RESTful API.
+Mongoose: An Object Data Modeling (ODM) library for MongoDB and Node.js, used to define schemas and interact with the database.
+Validator: A library used for data validation, such as email validation.
 
-Configuration
-Create a .env file in the backend directory with the following environment variables:
-    SPOTIFY_CLIENT_ID=your_spotify_client_id
-    SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-    DATABASE_URL=your_database_url
+**Frontend**
+React.js: A JavaScript library for building user interfaces.
+Tailwind CSS: A utility-first CSS framework used for styling the frontend.
 
-Running the Server
-Start the backend server:
-    node app.js
-
-Frontend Setup
-Install Dependencies
-Navigate to the frontend directory and install the necessary dependencies:
-    cd frontend
-    npm install
-
-Configuration
-Create a .env file in the frontend directory with the following environment variables:
-    REACT_APP_SPOTIFY_CLIENT_ID=your_spotify_client_id
-    REACT_APP_SPOTIFY_REDIRECT_URI=your_redirect_uri
-
-Running the Frontend
-To start with the frontend development server:
-    npm start
-
-Usage:
-    Once both the backend and frontend servers are running, access the application by navigating to http://localhost:3000 in your web browser. Log in with your Spotify account to start managing your playlists.
-
-Folder Structure:
-    Sportify2/
-    ├── backend/
-    │   ├── config/
-    │   ├── controller/
-    │   ├── database/
-    │   ├── error/
-    │   ├── models/
-    │   ├── public/
-    │   ├── routes/
-    │   ├── app.js
-    │   ├── server.js
-    │   ├── package.json
-    │   └── package-lock.json
-    └── frontend/
-        ├── public/
-        ├── src/
-        ├── .gitignore
-        ├── README.md
-        ├── package.json
-        ├── package-lock.json
-        └── tailwind.config.js
-
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
+**Database**
+MongoDB: A NoSQL database used to store data. The database interactions are facilitated through Mongoose.
+Postman: Used for testing and managing API endpoints and database operations during development.
+Approach to ERD and Schema Implementation
+Entity-Relationship Diagram (ERD): The ERD was designed to map out the relationships between various entities such as Ground Owners, Grounds, Tournaments, Slots, Reviews, and Ratings.
+Schema Implementation: Using Mongoose, we implemented schemas to model our database structure in MongoDB. Each schema represents an entity with defined fields and relationships.
+JSON Usage
+API Requests and Responses: JSON is used as the format for API requests and responses, allowing the frontend and backend to communicate effectively.
+Database Operations: Data stored in MongoDB is in BSON (Binary JSON) format. Mongoose helps in converting JSON data to BSON and vice versa.
