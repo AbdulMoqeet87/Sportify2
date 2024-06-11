@@ -39,32 +39,32 @@ const tournamentSchema = new Schema({
     default: 0,
   },
   teamsCount: Number,
-  Teams: {
-    type: [{
-      name: String,
-      captainName: String,
-      Players: [{
-        Name: String,
-        Number: Number
-      }],
-      RegistrationNumber: String,
-      RegistrationDate: String,
-      //RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null }
-    }],
-    default: null
-  }
-  // Teams: [{
-  //   name: String,
-  //   captainName: String,
-  //   Players: [{
-  //     Name: String,
-  //     Email: String,
-  //     Number: Number
+  // Teams: {
+  //   type: [{
+  //     name: String,
+  //     captainName: String,
+  //     Players: [{
+  //       Name: String,
+  //       Number: Number
+  //     }],
+  //     RegistrationNumber: String,
+  //     RegistrationDate: String,
+  //     //RegisteredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null }
   //   }],
-  //   RegistrationNumber: Date,
-  //   RegistrationDate: Date,
-  //   //RegisteredBy: String
-  // }]
+  //   default: null
+  // }
+  Teams: [{
+    name: String,
+    captainName: String,
+    Players: [{
+      Name: String,
+      Email: String,
+      Number: Number
+    }],
+    RegistrationNumber: String,
+    RegistrationDate: Date,
+    RegisteredBy: String,
+  }]
 });
 
 const ReviewSchema= new Schema({

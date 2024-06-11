@@ -14,8 +14,10 @@ import SportCatagories_ from './Pages/SelectCategory/Catagories';
 import Arenas from './Pages/Arenas/AvailableArenas';
 import UserInformation from './Pages/UserInformation/Userinfo';
 import GroundInformation from './Pages/GroundInfo/GroundInformation';
-import Tournament from './Pages/TournamentDeatils/TournamentFormDetails';
+import Tournament from './Pages/TournamentDeatils/TournamentDetails';
+import TournamentForm from './Pages/Tournament/TournamentForm'
 import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
+import OwnerGroundInformat from './Pages/OwnerGroundInformat/OwnerGroundInformat';
 const App = () => {
   return (
     <>
@@ -35,6 +37,8 @@ const App = () => {
           <Route path='/GroundInfo' element={<GroundInformation/>}/>
           <Route path='/OwnerHome' element={<OwnerHome/>}/>
           <Route path='/Tournament' element={<Tournament/>}/>
+          <Route path='/TournamentForm' element={<TournamentForm/>}/>
+          <Route path='/OwnerGroundInfo' element={<OwnerGroundInformat/>}/>
           
           <Route path='*' element={<NotFound/>}/>
 
