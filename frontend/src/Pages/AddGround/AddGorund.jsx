@@ -77,7 +77,7 @@ const AddGround = () => {
       setGroundOwnerEmail('');
       setImage(null);
       setSlots([{ date: '', startTime: '', endTime: '' }]);
-      navigate('/grounds'); 
+      navigate('/OwnerHome'); 
     } catch (error) {
       console.error(error);
     }
