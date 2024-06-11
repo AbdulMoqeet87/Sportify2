@@ -7,7 +7,10 @@ import { useLocation } from 'react-router-dom';
 
 const Tournament = () => {
   const { state } = useLocation();
-  const g_id = `6631fe7f69bb61094ab8c3e6`;
+  console.log("Sate In front", state);
+  const g_id = state && state.id ? state.id : "";
+  console.log("G_id",g_id);
+  //const g_id = `6631fe7f69bb61094ab8c3e6`;
 
   const [tournamentName, setTournamentName] = useState('');
   const [winningPrize, setWinningPrize] = useState('');
@@ -35,7 +38,7 @@ const Tournament = () => {
     form.append('RegStartingDate', regStartingDate);
     form.append('RegEndingDate', regEndingDate);
     form.append('teamsCount', teamsCount);
-
+  
     try {
       console.log("form data", form);
       console.log("g_id", g_id);
@@ -50,7 +53,7 @@ const Tournament = () => {
           console.log(pair[0] + ': ' + pair[1]);
         }
       }
-
+  
       await axios.post(
         `http://localhost:4000/GroundOwner/tournaments/${g_id}`,
         form,
@@ -60,7 +63,7 @@ const Tournament = () => {
           },
         }
       );
-
+  
       setTournamentName('');
       setWinningPrize('');
       setPosterPath(null);
@@ -69,12 +72,18 @@ const Tournament = () => {
       setRegStartingDate('');
       setRegEndingDate('');
       setTeamsCount('');
-      navigate('/tournaments');
-    } catch (error) {
-      console.error(error);
+      navigate('/OwnerGroundInfo', { state: { id: g_id } });
+      toast.success("Tournament registered successfully");
+    }
+    
+    catch (error) {
+      console.error("Error registering tournament:", error);
+      toast.error("Failed to register tournament");
+    } finally {
+     
     }
   };
-
+  
   return (
     <div className="bg_images_T min-h-screen flex items-center justify-center">
       <NB />
