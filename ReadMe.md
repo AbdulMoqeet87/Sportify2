@@ -29,6 +29,53 @@ Postman: Used for testing and managing API endpoints and database operations dur
 Approach to ERD and Schema Implementation
 Entity-Relationship Diagram (ERD): The ERD was designed to map out the relationships between various entities such as Ground Owners, Grounds, Tournaments, Slots, Reviews, and Ratings.
 Schema Implementation: Using Mongoose, we implemented schemas to model our database structure in MongoDB. Each schema represents an entity with defined fields and relationships.
-JSON Usage
+
+**JSON Usage**
 API Requests and Responses: JSON is used as the format for API requests and responses, allowing the frontend and backend to communicate effectively.
 Database Operations: Data stored in MongoDB is in BSON (Binary JSON) format. Mongoose helps in converting JSON data to BSON and vice versa.
+
+**Example Schema: Ground Owner**
+    import mongoose from "mongoose";
+    import validator from "validator";
+    const { Schema } = mongoose;
+    
+    const groundOwnerSchema = new Schema({
+      UserName: {
+        type: String,
+        required: true,
+        minLength: [3, "Username must be at least 3 characters long."],
+        maxLength: [255, "Username cannot exceed 255 characters."]
+      },
+      FirstName: {
+        type: String,
+        minLength: [3, "First Name must be at least 3 characters long."],
+        maxLength: [255, "First Name cannot exceed 255 characters."]
+      },
+      LastName: {
+        type: String,
+        minLength: [3, "Last Name must be at least 3 characters long."],
+        maxLength: [255, "Last Name cannot exceed 255 characters."]
+      },
+      Password: {
+        type: String,
+        required: true,
+        minLength: [6, "Password must be at least 6 characters long."]
+      },
+      email: {
+        type: String,
+        required: true,
+        validate: [validator.isEmail, "Provide a valid email"]
+      },
+      PhoneNo: {
+        type: String,
+        required: true,
+        minLength: [11, "Phone number must contain 11 digits."],
+        maxLength: [11, "Phone number must contain 11 digits."]
+      },
+      Grounds: [groundSchema]
+    });
+    
+    export const GroundOwner = mongoose.model("GroundOwner", groundOwnerSchema);
+
+
+
