@@ -63,7 +63,7 @@ const tournamentSchema = new Schema({
     captainName: String,
     Players: [{
       Name: String,
-      Email: String,
+      
       Number: Number
     }],
     RegistrationNumber: String,
