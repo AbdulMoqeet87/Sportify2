@@ -11,7 +11,7 @@ Ground Booking System: Users can book sports grounds based on available slots.
 Tournament Management: Organize and manage sports tournaments, including team registrations and scheduling.
 User Reviews and Ratings: Users can review and rate grounds and tournaments.
 
-****Technologies and Languages Used******
+****Technologies and Languages Used****
 
 **Backend**
 
@@ -34,6 +34,10 @@ Schema Implementation: Using Mongoose, we implemented schemas to model our datab
 **JSON Usage**
 API Requests and Responses: JSON is used as the format for API requests and responses, allowing the frontend and backend to communicate effectively.
 Database Operations: Data stored in MongoDB is in BSON (Binary JSON) format. Mongoose helps in converting JSON data to BSON and vice versa.
+
+**Initial and Final ERD**
+The initial and final ERD for Sportify are in report link.
+
 
 **Example Schema: Ground Owner**
     import mongoose from "mongoose";
