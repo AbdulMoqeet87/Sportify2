@@ -158,6 +158,10 @@ const groundOwnerSchema = new Schema({
     minLength: [11, "Phone number must contain 11 digits !"],
     maxLength: [11, "Phone number must contain 11 digits !"]
   },
+  city: {
+    type: String,
+    required: true
+  },
   Grounds: [groundSchema]
 });
 

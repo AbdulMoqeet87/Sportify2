@@ -4,9 +4,9 @@ import ErrorHandler from "../error/error.js";
 
 export const CreateUser = async (req, res, next) => {
     try {
-        const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds } = req.body;
+        const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds,city } = req.body;
 
-        if (!FirstName || !LastName || !email || !Password || !PhoneNo || !UserName) {
+        if (!FirstName || !LastName || !email || !Password || !PhoneNo || !UserName||! city ) {
             return next(new ErrorHandler("Please Fill-Out the Complete Form!", 400));
         }
 
@@ -25,7 +25,7 @@ export const CreateUser = async (req, res, next) => {
             return next(new ErrorHandler("Phone No. Entered is Already In Use!", 400));
         }
 
-        await User.create({ FirstName, UserName, LastName, email, Password, PhoneNo, Grounds });
+        await User.create({ FirstName, UserName, LastName, email, Password, PhoneNo, Grounds,city });
 
         res.status(201).json({
             success: true,
@@ -119,8 +119,6 @@ export const GetUserByEmail = async (req, res, next) => {
     return next(error);
   }
 };
-
-
 
 export const GetUserByID = async (req, res, next) => {
   console.log(req.params.id);

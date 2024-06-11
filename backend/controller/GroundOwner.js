@@ -1,5 +1,6 @@
 import { dbConnection } from "../database/dbConnection.js";
 import { GroundOwner } from "../models/GroundOwnerSchema.js";
+import { User } from "../models/UserSchema.js";
 import ErrorHandler from "../error/error.js";
 import mongoose from "mongoose";
 export const getTop5LatestTournaments = async (req, res) => {
@@ -37,7 +38,7 @@ export const getTop5LatestTournaments = async (req, res) => {
 
 export const createGroundOwner = async (req, res, next) => {
   try {
-    const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds } =
+    const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds,city } =
       req.body;
 
     if (
@@ -46,7 +47,8 @@ export const createGroundOwner = async (req, res, next) => {
       !email ||
       !Password ||
       !PhoneNo ||
-      !UserName
+      !UserName||
+      !city
     ) {
       return next(new ErrorHandler("Please Fill Complete Form!", 400));
     }
@@ -73,6 +75,7 @@ export const createGroundOwner = async (req, res, next) => {
       Password,
       PhoneNo,
       Grounds,
+      city,
     });
 
     res.status(201).json({
@@ -253,24 +256,41 @@ export const getAllTournamentsPosters = async (req, res) => {
 
 export const getGroundsByCategory = async (req, res) => {
   try {
-    // Extract the category from request parameters
-    const { category } = req.params;
-    console.log("category: ",category);
+    // Extract the category and user ID from request parameters
+    const { category, id } = req.params;
+        console.log("id in get ground",id);
+    // Find the user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
     // Find all ground owners with grounds matching the specified category
     const groundOwners = await GroundOwner.find({
       "Grounds.SportsCategory": category,
     });
 
-    // Extract grounds with the specified category
+    // Extract grounds with the specified category and matching city
     const grounds = groundOwners.flatMap((groundOwner) =>
-      groundOwner.Grounds.filter((ground) => ground.SportsCategory === category)
+      groundOwner.Grounds.filter(
+        (ground) =>
+          ground.SportsCategory === category && ground.City === user.city
+      )
     );
 
+    // Check if any grounds were found
+    if (grounds.length === 0) {
+      return res.status(404).json({ success: false, message: "No grounds found matching the specified category and city" });
+    }
+
+    // Return the filtered grounds
     res.status(200).json({ success: true, data: grounds });
   } catch (error) {
+    // Handle any errors that occur
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 export const createManyGroundOwners = async (req, res) => {
   try {

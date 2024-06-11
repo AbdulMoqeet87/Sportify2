@@ -61,7 +61,7 @@ const SideBar = () => {
                                 <span className="ml-3">Post Tournament</span>
                             </a>
          </li>
-     
+              
          </ul>
    </div> 
 </aside>

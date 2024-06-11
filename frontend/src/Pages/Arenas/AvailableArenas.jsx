@@ -10,14 +10,15 @@ const ArenasAvail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const cat = state && state.category ? state.category : "";
-
+  const u_id= localStorage.getItem('userId');
+  
   useEffect(() => {
     handleSearch(cat);
   }, [cat]); // Run this effect whenever the category changes
 
   const handleSearch = async (category) => {
     try {
-      const response = await axios.get(`http://localhost:4000/GroundOwner/grounds/${category}`);
+      const response = await axios.get(`http://localhost:4000/GroundOwner/grounds/${category}/${u_id}`);
       if (response.data && Array.isArray(response.data.data)) {
         setGround(response.data.data);
       } else {

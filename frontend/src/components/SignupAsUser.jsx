@@ -13,6 +13,8 @@ const Reservation = () => {
   const [Password, setPassword] = useState("");
   const [PhoneNo, setPhone] = useState("");
   const [role, setRole] = useState("")
+  const [city, setCity] = useState("")
+  
   const navigate = useNavigate();
 
   const SignUpAsUser = async (e) => {
@@ -20,7 +22,7 @@ const Reservation = () => {
     try {
       const { data } = await axios.post(
         "http://localhost:4000/User/signup/",
-        { FirstName, LastName, email,UserName, PhoneNo,Password},
+        { FirstName, LastName, email,UserName, PhoneNo,Password, city},
         {
           headers: {
             "Content-Type": "application/json",
@@ -35,6 +37,7 @@ const Reservation = () => {
       setEmail("");
       setUserName("");
       setPassword("");
+      setCity("");
       navigate("/login");
     } 
     catch (error) {
@@ -47,7 +50,7 @@ const Reservation = () => {
     try {
       const { data } = await axios.post(
         "http://localhost:4000/GroundOwner/signup/",
-        { FirstName, LastName, email,UserName, PhoneNo,Password},
+        { FirstName, LastName, email,UserName, PhoneNo,Password,city},
         {
           headers: {
             "Content-Type": "application/json",
@@ -62,6 +65,7 @@ const Reservation = () => {
       setEmail("");
       setUserName("");
       setPassword("");
+      setCity("");
       navigate("/login");
     } 
     catch (error) {
@@ -96,6 +100,12 @@ return (
                 placeholder="Last Name"
                 value={LastName}
                 onChange={(e) => setLastName(e.target.value)}
+              />
+               <input
+                type="text"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
              <input
                 type="text"

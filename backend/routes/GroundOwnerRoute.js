@@ -25,7 +25,7 @@ import path from "path";
 router.get("/", getAllTournaments);
 router.post("/signup", createGroundOwner);
 router.get("/:category",getAllTournamentsByCategory)
-router.get('/grounds/:category',getGroundsByCategory)
+router.get('/grounds/:category/:id',getGroundsByCategory)
 router.post('/newOwners',createManyGroundOwners)
 router.get('/getOwner/:email',getOwnerByEmail)
 router.post('/BookSlot',markSlotBooked)
