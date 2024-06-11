@@ -78,4 +78,11 @@ Database Operations: Data stored in MongoDB is in BSON (Binary JSON) format. Mon
     export const GroundOwner = mongoose.model("GroundOwner", groundOwnerSchema);
 
 
+**Implementation Highlights**
+
+API Development: Developed using Express.js, providing endpoints for CRUD operations on entities like grounds, tournaments, and reviews.
+Frontend Integration: React components interact with the backend via RESTful API calls, managing state and rendering dynamic content.
+Data Validation: Using validator for email validation and Mongoose for schema validations ensures data integrity and reliability.
+
+
 
