@@ -1,15 +1,15 @@
-**Project Introduction: Sportify2**
+**Project Introduction: Sportify**
 
 **Project Overview**
 
 Seamlessly discover and book local sports arenas, join exciting tournaments, and allows ground owners to post their venues and host tournaments.
+Link to Project Report: https://docs.google.com/document/d/1h92PLIACxhlYi3INO98Gjdt6S27gJNiq0wCzZ41eMmw/edit?usp=sharing
+
 
 **Features**
 Ground Booking System: Users can book sports grounds based on available slots.
 Tournament Management: Organize and manage sports tournaments, including team registrations and scheduling.
 User Reviews and Ratings: Users can review and rate grounds and tournaments.
-Add Ground: Ground owner can create a new ground.
-Post Tournament: Ground owner can post a tournament.
 
 ****Technologies and Languages Used******
 
