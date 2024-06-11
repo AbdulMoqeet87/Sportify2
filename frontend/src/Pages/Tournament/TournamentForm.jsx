@@ -122,7 +122,7 @@ const TournamentForm = () => {
                 <div className="flex items-center justify-between pl-5 pr-5">
                   <div className="relative h-36 w-36 bg-white overflow-hidden rounded-full">
                     <img
-                      src={d.PosterPath}
+                      src={"/Posters/"+d.PosterPath}
                       alt=""
                       className="object-cover w-full h-full"
                     />

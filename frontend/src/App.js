@@ -18,6 +18,8 @@ import Tournament from './Pages/TournamentDeatils/TournamentDetails';
 import TournamentForm from './Pages/Tournament/TournamentForm'
 import OwnerHome from './Pages/GroundOwnerHome/OwnerHome';
 import OwnerGroundInformat from './Pages/OwnerGroundInformat/OwnerGroundInformat';
+import Ground from './Pages/AddGround/AddGorund';
+
 const App = () => {
   return (
     <>
@@ -39,6 +41,7 @@ const App = () => {
           <Route path='/Tournament' element={<Tournament/>}/>
           <Route path='/TournamentForm' element={<TournamentForm/>}/>
           <Route path='/OwnerGroundInfo' element={<OwnerGroundInformat/>}/>
+          <Route path='/AddGround' element={<Ground/>}/>
           
           <Route path='*' element={<NotFound/>}/>
 

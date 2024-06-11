@@ -773,6 +773,7 @@ console.log("req file",req.file)
 
     // Find ground owner and push the new tournament into the specified ground
     const groundOwner = await GroundOwner.findOne({ "Grounds._id": g_id });
+    
 console.log("GOwner",groundOwner);
     if (!groundOwner) {
       return res.status(404).json({ success: false, message: "Ground not found" });
@@ -795,5 +796,62 @@ console.log("GOwner",groundOwner);
   } catch (error) {
     console.error("Error creating tournament:", error);
     res.status(500).json({ success: false, error: "Error creating tournament" });
+  }
+};
+
+export const createGround = async (req, res) => {
+console.log("Adding new ground");
+
+
+  try {
+    const imagePath = req.file.filename;
+    console.log("imagePath", imagePath);
+    console.log("req file", req.file);
+    const { id } = req.params;
+    console.log("user id: ",id);
+    const {
+      G_Name,
+      SportsCategory,
+      Town,
+      City,
+      District,
+      Address,
+      PerHourCharges,
+      GroundOwnerEmail,
+      Slots,
+    } = req.body;
+
+    const groundData = {
+      G_Name,
+      SportsCategory,
+      Town,
+      City,
+      District,
+      Address,
+      PerHourCharges,
+      GroundOwnerEmail,
+      images: [imagePath],
+      Slots: JSON.parse(Slots), // Parse the slots JSON string
+    };
+
+
+    // Find ground owner by email and push the new ground
+    //const groundOwner = await GroundOwner.findOne({ Email: GroundOwnerEmail });
+    const groundOwner = await GroundOwner.findById(id);
+    console.log("Ground Owner", groundOwner);
+    if (!groundOwner) {
+      return res.status(404).json({ success: false, message: "Ground owner not found" });
+    }
+
+    // Push the new ground into the Grounds array of the ground owner
+    groundOwner.Grounds.push(groundData);
+
+    // Save the changes to the ground owner document
+    await groundOwner.save();
+
+    res.status(200).json({ success: true, message: "Ground added successfully", ground: groundData });
+  } catch (error) {
+    console.error("Error adding ground:", error);
+    res.status(500).json({ success: false, error: "Error adding ground" });
   }
 };

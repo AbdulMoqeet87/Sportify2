@@ -44,7 +44,8 @@ const fetchData = async (gId) => {
       const groundResponse = await axios.get(`http://localhost:4000/GroundOwner/GetGroundById/${gId}`);
       setGroundInfo(groundResponse.data.ground);
       setSlots(groundResponse.data.ground.Slots);
-      setRating(groundResponse.data.ground.Rating.MeanRating);
+      //setRating(groundResponse.data.ground.Rating.MeanRating);
+      setRating(groundResponse.data.ground.Rating.MeanRating.toFixed(1));
       setReviews(groundResponse.data.ground.Reviews)
         
       // Fetch owner details
@@ -167,7 +168,7 @@ const fetchData = async (gId) => {
                 <div key={index} className="pic_bg">
                   <div className="h-full w-auto bg-white flex justify-left items-center">
                     <img
-                      src={img}
+                      src={"/images/"+img}
                       alt={"image not found"}
                       className="h-full w-full object-cover"
                     />
@@ -178,18 +179,24 @@ const fetchData = async (gId) => {
           </div>
           <div className="w-2/6 bg-white h-[470px] text-teal-light-300 pl-20">
             <h1 className="Name-heading h-1/3">{groundinfo.G_Name}</h1>
-            <p className="paragraph_ h-2/3">
-              <span className="flex flex-row justify-content mt-2">
-                <FaMapMarkerAlt className="mt-1 mr-2" />
-                {groundinfo.City}
-              </span>
-              <br />
-              {groundinfo.Address}
-              <br />
-              <br />
-              Rating: {rating}
-              <StarRating totalStars={5} updateRating={handleRatingUpdate} />
-            </p>
+            
+            <button
+                 className="bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mt-0 mb-14"
+                onClick={() => navigate('/TournamentForm', { state: { id: groundinfo._id } })}
+              >
+                View Tournament
+              </button>
+              <p className="paragraph_ h-1/3">
+                <span className="flex flex-row justify-content mt-1 mb-0">
+                  <FaMapMarkerAlt className="mt-0 mr-2" />
+                  {groundinfo.City}
+                </span>
+                {groundinfo.Address}
+                <br />
+                <br />
+                Rating: {rating}
+                <StarRating totalStars={5} updateRating={handleRatingUpdate} />
+              </p>
           </div>
         </div>
       </div>

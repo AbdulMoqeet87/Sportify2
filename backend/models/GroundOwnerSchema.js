@@ -117,7 +117,10 @@ const groundSchema = new Schema({
   Tournaments: [tournamentSchema],
   Slots:[SlotSchema],
   Reviews:[ReviewSchema],
-  Rating: RatingSchema,
+  Rating: {
+    type: RatingSchema,
+    default: () => ({}), 
+  },
 });
 
 // Schema that defines ground owner details including personal information, credentials, and owned grounds

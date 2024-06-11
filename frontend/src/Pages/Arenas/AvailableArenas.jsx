@@ -40,7 +40,7 @@ const ArenasAvail = () => {
             <div key={index} className="ground-card mt-10 bg-white h-[140px] w-[700px] text-white p-1 border border-white  border-black">
               <div className="flex">
                 <div className="relative h-36 bg-white">
-                  <img src={d.images[0]} alt="" className="h-40 w-40 mr-10" />
+                  <img src={"/images/"+d.images[0]} alt="" className="h-40 w-40 mr-10" />
                 </div>
                 <div className="flex flex-col mt-0 ml-0 items-left gap-0 pl-10 w-2/4">
                   <p className="uppercase-text text-l text-blue-900 font-semibold mb-0 pb-4">{d.G_Name}</p>
@@ -52,12 +52,6 @@ const ArenasAvail = () => {
                     className="ml-5 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent"
                   >
                     Book Now
-                  </button>
-                  <button 
-                    onClick={() => navigate('/Tournament', { state: { id: d._id } })} 
-                    className="mt-5 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent"
-                  >
-                    Tournaments
                   </button>
                 </div>
               </div>

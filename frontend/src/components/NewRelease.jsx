@@ -11,7 +11,7 @@ const NewRelease = () => {
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/GroundOwner/`);
+        const response = await axios.get("http://localhost:4000/GroundOwner/");
         if (response.data && Array.isArray(response.data.data)) {
           setTournaments(response.data.data);        
         } else {
