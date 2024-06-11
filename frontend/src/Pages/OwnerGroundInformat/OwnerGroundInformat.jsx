@@ -101,7 +101,7 @@ const OwnerGroundInformat = () => {
                   <div key={index} className="pic_bg">
                     <div className="h-full w-auto bg-white flex justify-left items-center">
                       <img
-                        src={img}
+                        src={"/images/"+img}
                         alt={"image not found"}
                         className="h-full w-full object-cover"
                       />

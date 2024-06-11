@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NB from "../../components/Navbar";
+import toast from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
 
 const AddGround = () => {
@@ -78,13 +79,15 @@ const AddGround = () => {
       setImage(null);
       setSlots([{ date: '', startTime: '', endTime: '' }]);
       navigate('/OwnerHome'); 
+      toast.success("Ground added successfully");
     } catch (error) {
+    toast.error("Could not add ground");
       console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50">
+    <div className="bg_images_G min-h-screen flex items-center justify-center bg-blue-50">
       <NB />
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg mx-auto mt-20">
         <h1 className="text-3xl font-bold text-center mb-8 text-blue-800">Add New Ground</h1>

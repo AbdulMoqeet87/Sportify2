@@ -810,9 +810,10 @@ console.log("Adding new ground");
       Address,
       PerHourCharges,
       GroundOwnerEmail,
-      Image: imagePath,
+      images: [imagePath],
       Slots: JSON.parse(Slots), // Parse the slots JSON string
     };
+
 
     // Find ground owner by email and push the new ground
     //const groundOwner = await GroundOwner.findOne({ Email: GroundOwnerEmail });

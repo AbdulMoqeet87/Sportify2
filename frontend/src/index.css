@@ -1475,3 +1475,9 @@ background-repeat: repeat;
 .text-shadow-black {
   text-shadow:  -4px 2px 2px rgb(0, 0, 0);
 }
+
+.bg_images_G{
+  background-image: url(../public/back.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  }

@@ -47,7 +47,7 @@ router.get('/groundsById/:id',GetMyGrounds)
 const storagePoster = multer.diskStorage({
     destination: function (req, file, cb) {
         console.log("insideStorage")
-         cb(null, "C:/Users/Micro/Sportify2/frontend/public/Posters");
+         cb(null, "E:/DATA/Documents/DS/Sportify2/frontend/public/Posters");
     },
     filename: function (req, file, cb) {
         cb(null,`${Date.now()}_${file.originalname}`)
@@ -87,13 +87,13 @@ router.post('/tournaments/:g_id', uploadPoster.single('PosterPath'),createTourna
 
 const G_ImgStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'C:/Users/Micro/Sportify2/frontend/public/images');
+      cb(null, 'E:/DATA/Documents/DS/Sportify2/frontend/public/images');
     },
     filename: (req, file, cb) => {
       cb(null, `${Date.now()}-${file.originalname}`);
     },
   });
   
-  const G_Image = multer({ G_ImgStorage });
+  const G_Image = multer({storage: G_ImgStorage });
   router.post('/CreateGround/:id', G_Image.single('Image'),createGround); 
 export default router;
