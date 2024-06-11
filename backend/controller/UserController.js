@@ -7,29 +7,29 @@ export const CreateUser = async (req, res, next) => {
         const { UserName, FirstName, LastName, Password, email, PhoneNo, Grounds } = req.body;
 
         if (!FirstName || !LastName || !email || !Password || !PhoneNo || !UserName) {
-            return next(new ErrorHandler("Please Fill Complete Form!", 400));
+            return next(new ErrorHandler("Please Fill-Out the Complete Form!", 400));
         }
 
         const existingUsername = await User.findOne({ UserName });
         if (existingUsername) {
-            return next(new ErrorHandler("User Already Exist!", 400));
+            return next(new ErrorHandler("The User Already Exists!", 400));
         }
 
         
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
-            return next(new ErrorHandler("Email Already In Use!", 400));
+            return next(new ErrorHandler("Email entered is Already In Use!", 400));
         }
         const existingPhoneNO = await User.findOne({ PhoneNo });
         if (existingPhoneNO) {
-            return next(new ErrorHandler("Phone No. Already In Use!", 400));
+            return next(new ErrorHandler("Phone No. Entered is Already In Use!", 400));
         }
 
         await User.create({ FirstName, UserName, LastName, email, Password, PhoneNo, Grounds });
 
         res.status(201).json({
             success: true,
-            message: "Account Created!",
+            message: "Account Created Successfully!",
         });
     } catch (error) {
         // Handle Mongoose validation errors and other errors
@@ -50,7 +50,7 @@ export const FindUser = async (req, res, next) => {
 
     if (!email || !Password) 
     {
-      return next(new ErrorHandler("Please provide both email and password!", 400));
+      return next(new ErrorHandler("Please Provide both email and password!", 400));
     }
 
     const existingUser = await User.findOne({email});
@@ -58,12 +58,12 @@ export const FindUser = async (req, res, next) => {
     
     if (!existingUser&&!existingOwner) {
 
-        return next(new ErrorHandler("User doesn't exist!", 404));
+        return next(new ErrorHandler("The User doesn't exist!", 404));
     }
     if(existingUser)
       {
         if (existingUser.Password!==Password) {
-      return next(new ErrorHandler("Incorrect password!", 401));
+      return next(new ErrorHandler("Incorrect Password !", 401));
     }
     res.status(200).json({
       success: true,
@@ -76,7 +76,7 @@ export const FindUser = async (req, res, next) => {
   if(existingOwner)
     {
       if (existingOwner.Password!==Password) {
-    return next(new ErrorHandler("Incorrect password!", 401));
+    return next(new ErrorHandler("Incorrect Password !", 401));
   }
   res.status(200).json({
     success: true,

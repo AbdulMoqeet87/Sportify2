@@ -48,9 +48,15 @@ const ArenasAvail = () => {
                 <div className="mt-0 items-right w-1/4">
                   <button 
                     onClick={() => navigate('/GroundInfo', { state: { id: d._id } })} 
-                    className="bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent"
+                    className="ml-5 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent"
                   >
                     Book Now
+                  </button>
+                  <button 
+                    onClick={() => navigate('/Tournament', { state: { id: d._id } })} 
+                    className="mt-5 bg-transparent hover:bg-black text-black font-semibold hover:text-white py-2 px-6 border border-black hover:border-transparent"
+                  >
+                    Tournaments
                   </button>
                 </div>
               </div>
