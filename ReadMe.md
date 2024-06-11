@@ -8,6 +8,8 @@ Seamlessly discover and book local sports arenas, join exciting tournaments, and
 Ground Booking System: Users can book sports grounds based on available slots.
 Tournament Management: Organize and manage sports tournaments, including team registrations and scheduling.
 User Reviews and Ratings: Users can review and rate grounds and tournaments.
+Add Ground: Ground owner can create a new ground.
+Post Tournament: Ground owner can post a tournament.
 
 ****Technologies and Languages Used******
 
