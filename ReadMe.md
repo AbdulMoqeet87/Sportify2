@@ -8,7 +8,6 @@ Seamlessly discover and book local sports arenas, join exciting tournaments, and
 Ground Booking System: Users can book sports grounds based on available slots.
 Tournament Management: Organize and manage sports tournaments, including team registrations and scheduling.
 User Reviews and Ratings: Users can review and rate grounds and tournaments.
-Music Integration: Seamlessly integrate with Spotify for an enhanced user experience.
 
 ****Technologies and Languages Used******
 
