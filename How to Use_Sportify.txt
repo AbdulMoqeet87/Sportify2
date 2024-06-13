@@ -1,0 +1,8 @@
+first go to GroundOwnerRoute.js in backend and in multer replace the given path with the path 
+where you have placed frontend/Posters in your computer and same for Frontend/images,
+
+Now just open backend folder in vscode and run using npm run dev and then open frontend folder in vscode
+and run using npm run dev 
+
+at the very end we added 'city' attribute in groundowner and User so not all grounds will work fine
+only ittefaq2 will because its owner has city .... 
