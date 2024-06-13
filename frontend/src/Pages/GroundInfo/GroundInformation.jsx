@@ -286,11 +286,7 @@ const fetchData = async (gId) => {
           )}
         </div>
       </div>
-      <button
-        className="bg-gray-600 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded mt-4"
-        onClick={() => navigate('/TournamentForm', { state: { id: groundinfo._id } })}>
-        Tournament Registration
-      </button>
+
       {showModal && (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md">
